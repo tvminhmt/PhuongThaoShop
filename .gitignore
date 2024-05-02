@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src/aspnet-core/.vs/PTS
+/src/aspnet-core/PTS.Core/obj
+/src/aspnet-core/PTS.Domain/obj
+/src/aspnet-core/PTS.Host/obj
+/src/aspnet-core/PTS.Infrastructure/obj
