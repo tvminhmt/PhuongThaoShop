@@ -7,3 +7,8 @@
 /src/aspnet-core/PTS.Domain/obj
 /src/aspnet-core/PTS.Host/obj
 /src/aspnet-core/PTS.Infrastructure/obj
+/src/aspnet-core/.vs/ProjectEvaluation
+/src/aspnet-core/PTS.Core/bin/Debug/net8.0
+/src/aspnet-core/PTS.Domain/bin/Debug/net8.0
+/src/aspnet-core/PTS.Host/bin/Debug/net8.0
+/src/aspnet-core/PTS.Infrastructure/bin/Debug/net8.0
