@@ -5,5 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	<ItemGroup>
+		<PackageReference Include="Abp" Version="9.2.2" />
+		<PackageReference Include="Volo.Abp.BlobStoring.Database.Domain" Version="8.0.5" />
+		<PackageReference Include="Volo.Abp.Core" Version="8.0.5" />
+	</ItemGroup>
 </Project>
