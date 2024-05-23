@@ -21,7 +21,4 @@
 	  <ProjectReference Include="..\PTS.Core\PTS.Core.csproj" />
 	  <ProjectReference Include="..\PTS.Domain\PTS.Domain.csproj" />
 	</ItemGroup>
-	<ItemGroup>
-	  <Folder Include="Repositories\.vs\" />
-	</ItemGroup>
 </Project>
