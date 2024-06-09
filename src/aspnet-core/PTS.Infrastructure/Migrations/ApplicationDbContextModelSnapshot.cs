@@ -8,7 +8,7 @@ using PTS.Data;
 
 #nullable disable
 
-namespace PTS.Persistence.Migrations
+namespace PTS.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -751,7 +751,7 @@ namespace PTS.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("CrDateTime")
+                    b.Property<DateTime?>("CreationTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("EndDay")
@@ -760,23 +760,25 @@ namespace PTS.Persistence.Migrations
                     b.Property<decimal>("GiaTri")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("MaVoucher")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("SoLuong")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDay")
+                    b.Property<DateTime?>("StarDay")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
+                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("TenVoucher")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
@@ -801,7 +803,7 @@ namespace PTS.Persistence.Migrations
                         .HasForeignKey("UserEntityId");
 
                     b.HasOne("PTS.Domain.Entities.VoucherEntity", "VoucherEntitity")
-                        .WithMany()
+                        .WithMany("BillEntities")
                         .HasForeignKey("VoucherEntityId");
 
                     b.Navigation("UserEntity");
@@ -1011,6 +1013,11 @@ namespace PTS.Persistence.Migrations
             modelBuilder.Entity("PTS.Domain.Entities.UserEntity", b =>
                 {
                     b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.VoucherEntity", b =>
+                {
+                    b.Navigation("BillEntities");
                 });
 #pragma warning restore 612, 618
         }
