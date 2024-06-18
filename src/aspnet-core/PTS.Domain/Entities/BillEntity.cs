@@ -1,11 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PTS.Domain.Common;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PTS.Domain.Entities
 {
     [Table("Bill")]
-    public class BillEntity : BaseEntity
-    {
+    public class BillEntity : BaseAuditableEntity
+	{
+        [Key]
+		public int Id { get; set; }
         [Required]
         [MaxLength(100)]
         public string? InvoiceCode { get; set; }
@@ -21,8 +24,14 @@ namespace PTS.Domain.Entities
         public decimal? Discount { get; set; }
         public int? VoucherEntityId { get; set; }
         public int? UserEntityId { get; set; }
-        public virtual VoucherEntity? VoucherEntitity { get; set; }
+		public int? CrUserId { get; set; }
+		public DateTime? CrDateTime { get; set; }
+		public int Status { get; set; }
+       
+		public virtual VoucherEntity? VoucherEntitity { get; set; }
+       
         public virtual UserEntity? UserEntity { get; set; }
+       
         public virtual ICollection<BillDetailEntity>? BillDetailEntities { get; set; }
     }
 }
