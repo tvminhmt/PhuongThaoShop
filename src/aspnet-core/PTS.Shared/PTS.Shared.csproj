@@ -5,10 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
+	<ItemGroup>
+		<PackageReference Include="Abp" Version="9.1.2" />
+	</ItemGroup>
 </Project>

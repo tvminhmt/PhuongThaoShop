@@ -1,0 +1,15 @@
+﻿<?xml version="1.0"?>
+<doc>
+	<assembly>
+		<name>api.bongda24h.vn</name>
+	</assembly>
+	<members>
+		<member name="M:PTS.WebAPI.Controllers.BillController.CreateBill">
+			<summary>
+				Tìm kiếm CLB theo từ khóa
+			</summary>
+			<param name="keyword">Khi người dùng không nhập, truyền giá trị mặc định là "keyword"</param>
+			<returns></returns>
+		</member>
+	</members>
+</doc>
