@@ -13,3 +13,11 @@
 /src/aspnet-core/PTS.Host/bin/Debug/net8.0
 /src/aspnet-core/PTS.Infrastructure/bin/Debug/net8.0
 /src/angular/node_modules
+/src/aspnet-core/PTS.Application/obj
+/src/aspnet-core/PTS.Application/bin/Debug/net8.0
+/src/aspnet-core/PTS.Shared/bin/Debug/net8.0
+/src/aspnet-core/PTS.Shared/obj
+/src/aspnet-core/PTS.WebAPI/bin/Debug/net8.0
+/src/aspnet-core/PTS.WebAPI/obj
+/src/aspnet-core/PTS.Persistence/bin/Debug/net8.0
+/src/aspnet-core/PTS.Persistence/obj
