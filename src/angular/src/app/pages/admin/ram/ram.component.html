@@ -1,0 +1,54 @@
+<button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
+  <i class="fa fa-plus"></i> Thêm mới
+</button>
+<nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
+  <thead>
+    <tr>
+      <th nzWidth="25%">Số thứ tự</th>
+      <th nzWidth="25%">Mã</th>
+      <th nzWidth="25%">Thông số</th>
+      <th nzWidth="25%">Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of basicTable.data; index as i">
+      <td>{{i+1}}</td>
+      <td>{{ item.ma}}</td>
+      <td>{{ item.thongSo }}</td>
+      <td>
+        <a (click)="edit(item)" style="margin-right: 10px;">   <span class="kt-font-success">
+          <i nz-icon nzType="edit" nzTheme="outline"></i>
+      </span></a>
+      <a (click)="delete(item.id)" >
+        <span class="kt-font-danger">
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </span>
+    </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="close()" (click)="save()">
+  <nz-layout *nzModalContent>
+    <form nz-form [formGroup]="fbForm" style="background-color:white;">
+      <nz-form-item>
+        <nz-form-label nzFor="ma" [nzSm]="4" nzRequired>Mã</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="ma" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="thongSo" [nzSm]="4" nzRequired>Thông số</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="thongSo" />
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-layout>
+  <div *nzModalFooter>
+    <button type="button" nz-button nzType="default" (click)="close()">Đóng</button>
+    <button type="button" nz-button nzType="primary" (click)="save()"><i nz-icon
+                                                                                              nzType="save"></i>Lưu
+    </button>
+</div>
+</nz-modal>
