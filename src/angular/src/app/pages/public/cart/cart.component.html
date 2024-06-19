@@ -1,0 +1,347 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col-md-auto">
+        <h5 class="mb-3 mb-md-0">Giỏ Hàng ({{cartItems.length}})</h5>
+      </div>
+      <div class="col-md-auto">
+        <a class="btn btn-sm btn-outline-secondary border-300 me-2 shadow-none" [routerLink]="'/laptop-moi.html'">
+          <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4"></span>Tiếp tục mua hàng</a>
+        <a class="btn btn-sm btn-primary" href="checkout.html">Checkout</a>
+      </div>
+    </div>
+  </div>
+<div class="container">
+ 
+  <main class="main">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th width="100px">Số Thứ Tự</th>
+          <th>Tên Sản Phẩm</th>
+          <th>Giá</th>
+          <th>Số Lượng</th>
+          <th>Tổng</th>
+          <th>Xóa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of cartItems; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.maProductDetail}} {{ data.nameProduct }}</td>
+          <td>{{ data.price | vndFormat }}</td>
+          <td><nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" [(ngModel)]="data.quantity"
+              (ngModelChange)="quantityChange(data.id, $event)"></nz-input-number></td>
+          <td>{{ data.price * data.quantity | vndFormat }}</td>
+          <td><a nz-icon nzType="delete" nzTheme="outline" nz-popconfirm
+              nzPopconfirmTitle="Bạn có muốn xóa sản phẩm này không?" nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="deleteCartDetail(data.id)" (nzOnCancel)="cancel()"></a></td>
+        </tr>
+      </tbody>
+
+      <div>
+        <!-- <td colspan="4" style="line-height:22px; color:#555">
+          <b>Tổng cộng : {{ calculateTotalPrice() | vndFormat }}<span class="total-cart-price"></span></b><br>
+          <b style="color:red; font-size:16px;">Thanh toán : <span class="sub1 total-cart-payment" id="total_value"
+              style="color: red; font-weight: bold;" data-gtm-vis-recent-on-screen10926496_41="278"
+              data-gtm-vis-first-on-screen10926496_41="278" data-gtm-vis-total-visible-time10926496_41="100"
+              data-gtm-vis-has-fired10926496_41="1">330.100.560.000</span> VND &nbsp; </b>
+
+        </td> -->
+      </div>
+    </table>
+    <div class="row fw-bold gx-card mx-0">
+      <div class="col-9 col-md-8 py-2 text-end text-900">Total</div>
+      <div class="col px-0">
+        <div class="row gx-card mx-0">
+          <div class="col-md-8 py-2 d-none d-md-block text-center">7 (items)</div>
+          <div class="col-12 col-md-4 text-end py-2">$8516</div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <form nz-form [nzLayout]="'inline'" [formGroup]="createBillForm">
+        <div class="col-md-8 col-sm-8">
+          <nz-form-item class="pdt-15" nzGutter="6">
+            <nz-form-label class="width-200" nzFor="fullName" [nzSm]="4" nzRequired>Họ và tên</nz-form-label>
+            <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+              <input nz-input class="input-w-300" formControlName="fullName" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="pdt-15" nzGutter="6">
+            <nz-form-label class="width-200" nzFor="address" [nzSm]="4" nzRequired>Địa chỉ</nz-form-label>
+            <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+              <input nz-input class="input-w-300" formControlName="address" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="pdt-15" nzGutter="6">
+            <nz-form-label class="width-200" nzFor="phoneNumber" [nzSm]="4" nzRequired>Số điện thoại</nz-form-label>
+            <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+              <input nz-input class="input-w-300" formControlName="phoneNumber" />
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item class="pdt-15" nzGutter="6">
+            <nz-form-label class="width-200" nzFor="email" [nzSm]="4" nzRequired>Email</nz-form-label>
+            <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+              <input nz-input class="input-w-300" formControlName="email" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <nz-form-item nzGutter="6">
+            <nz-form-control>
+              <label class="width-200">Mã giảm giá</label> <br>
+              <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
+                formControlName="codeVoucher" nzName="codeVoucher">
+                <nz-option *ngFor="let voucher of loadVouchers" [nzLabel]="voucher.maVoucher"
+                  [nzValue]="voucher.maVoucher">
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item nzGutter="6">
+            <nz-form-control>
+              <nz-radio-group formControlName="payment" nzName="paymentMethod">
+                <label class="width-200">Phương thức thanh toán</label> <br>
+                <label class="width-200" nz-radio nzValue="1">Thanh toán tại cửa hàng</label> <br>
+                <label class="width-200" nz-radio nzValue="2">Thanh toán khi nhận hàng (COD)</label><br>
+                <label class="width-200" nz-radio nzValue="3">Thanh toán bằng chuyển khoản ngân hàng</label><br>
+                <label class="width-200" nz-radio nzValue="4">Thanh toán trả góp</label>
+              </nz-radio-group>
+            </nz-form-control>
+          </nz-form-item>
+          <button nz-button nzType="primary" (click)="createBill()">Gửi đơn hàng</button>
+
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+<div class="card">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col-md-auto">
+        <h5 class="mb-3 mb-md-0">Shopping Cart (7 Items)</h5>
+      </div>
+      <div class="col-md-auto">
+        <a class="btn btn-sm btn-outline-secondary border-300 me-2 shadow-none" href="product/product-list.html">
+          <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4"></span>Continue Shopping</a>
+        <a class="btn btn-sm btn-primary" href="checkout.html">Checkout</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="row gx-card mx-0 bg-200 text-900 fs--1 fw-semi-bold">
+      <div class="col-9 col-md-8 py-2">Name</div>
+      <div class="col-3 col-md-4">
+        <div class="row">
+          <div class="col-md-8 py-2 d-none d-md-block text-center">Quantity</div>
+          <div class="col-12 col-md-4 text-end py-2">Price</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/1.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Apple MacBook Pro 15&quot;
+                Z0V20008N: 2.9GHz 6-core 8th-Gen Intel Core i9, 32GB RAM</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$1292</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/2.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Apple iMac Pro (27-inch with Retina
+                5K Display, 3.0GHz 10-core Intel Xeon W, 1TB SSD)</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$2012</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/4.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Apple iPad Air 2019 (3GB RAM, 128GB
+                ROM, 8MP Main Camera)</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$1024</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/3.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Apple iPhone XS Max (4GB RAM, 512GB
+                ROM, 12MP Main Camera)</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$990</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/5.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Apple Watch Series 4 44mm GPS
+                Only</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$400</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/7.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Nikon D3200 Digital DSLR Camera</a>
+            </h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$2398</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a href="product/product-details.html"><img
+              class="img-fluid rounded-1 me-3 d-none d-md-block" src="../../assets/img/products/8.jpg" alt=""
+              width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900" href="product/product-details.html">Canon Standard Zoom Lens</a></h5>
+            <div class="fs--2 fs-md--1"><a class="text-danger" href="#!">Remove</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <div>
+              <div class="input-group input-group-sm flex-nowrap" data-quantity="data-quantity"><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none"
+                  data-type="minus">-</button><input class="form-control text-center px-2 input-spin-none" type="number"
+                  min="1" value="1" aria-label="Amount (to the nearest dollar)" style="width: 50px" /><button
+                  class="btn btn-sm btn-outline-secondary border-300 px-2 shadow-none" data-type="plus">+</button></div>
+            </div>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">$400</div>
+        </div>
+      </div>
+    </div>
+    <div class="row fw-bold gx-card mx-0">
+      <div class="col-9 col-md-8 py-2 text-end text-900">Total</div>
+      <div class="col px-0">
+        <div class="row gx-card mx-0">
+          <div class="col-md-8 py-2 d-none d-md-block text-center">7 (items)</div>
+          <div class="col-12 col-md-4 text-end py-2">$8516</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-footer bg-light d-flex justify-content-end">
+    <form class="me-3">
+      <div class="input-group input-group-sm"><input class="form-control" type="text" placeholder="Promocode" /><button
+          class="btn btn-outline-secondary border-300 btn-sm shadow-none" type="submit">Apply</button></div>
+    </form><a class="btn btn-sm btn-primary" href="checkout.html">Checkout</a>
+  </div>
+</div>
