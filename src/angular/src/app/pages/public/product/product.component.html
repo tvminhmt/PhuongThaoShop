@@ -1,0 +1,87 @@
+<div class="container">
+    <nz-breadcrumb>
+        <nz-breadcrumb-item>Trang chủ</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Laptop mới</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Thương hiệu" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Giá" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="CPU" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="Card VGA" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select>
+    <nz-select nzShowSearch nzAllowClear nzPlaceHolder="RAM" [(ngModel)]="selectedValue">
+        <nz-option nzLabel="Jack" nzValue="jack"></nz-option>
+        <nz-option nzLabel="Lucy" nzValue="lucy"></nz-option>
+        <nz-option nzLabel="Tom" nzValue="tom"></nz-option>
+    </nz-select> -->
+    <div class="row pd-top-50">
+        <div class="p-list d-flex flex-wrap">
+            <ng-container *ngIf="products && products.length > 0; else loading">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4" *ngFor="let p of products">
+                        <div class="p-item">
+                            <div class="p-img">
+                                <a>
+                                    <img src="https://laptopaz.vn/media/product/2487_laptopaz_dell_xps_9520_1.jpg"
+                                        alt="">
+                                </a>
+                            </div>
+                            <div class="p-emtry">
+                                <a class="p-name" [routerLink]="['/product', p.id]">[New 100%] {{ p.nameProduct }}
+                                    {{ p.code }} {{
+                                    p.tenCpu }} {{ p.thongSoRam }} {{ p.thongSoHardDrive }}</a>
+                                <span class="p-price">
+                                    <span class="box-text-update2021">
+                                        <span class="show-shadow">
+                                           {{p.price| vndFormat}} 
+                                        </span>
+                                    </span>
+                                    <span class="p-mprice">
+                                        {{p.oldPrice | vndFormat}}
+                                    </span>
+                                </span>
+                            </div>
+                            <span class="productType">
+                                <img class="img-fluid" src="../../../../assets/images/sales.png" alt="sale off">
+                                <span class="percent">-{{p.phanTramGiamGia}}%</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #loading>
+                <div>Loading...</div>
+            </ng-template>
+
+            <ng-template #loading>
+                <div>
+                    <nz-spin nzTip="Loading...">
+                        <nz-alert nzType="info" nzMessage="Alert message title"
+                            nzDescription="Further details about the context of this alert."></nz-alert>
+                    </nz-spin>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <nz-pagination
+  [nzPageIndex]="currentPage"
+  [nzTotal]="totalCount"
+  [nzPageSize]="pageSize"
+  (nzPageIndexChange)="onPageChange($event)">
+</nz-pagination>
+</div>
