@@ -8,7 +8,7 @@ namespace PTS.Application.Dto
 {
     public class ChangeContactInfoDto
     {
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
         public string NewAddress { get; set; }
         public string NewPhoneNumber { get; set; }
     }
