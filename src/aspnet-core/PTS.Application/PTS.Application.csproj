@@ -5,6 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="dataa.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="dataa.txt" />
+  </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
 		<PackageReference Include="AutoMapper" Version="12.0.0">
