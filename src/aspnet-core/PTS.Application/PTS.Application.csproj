@@ -33,6 +33,6 @@
 	  <ProjectReference Include="..\PTS.Shared\PTS.Shared.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Features\Account\Commands\" />
+	  <Folder Include="Features\" />
 	</ItemGroup>
 </Project>
