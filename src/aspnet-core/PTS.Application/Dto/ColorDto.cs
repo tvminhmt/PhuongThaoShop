@@ -13,5 +13,13 @@ namespace PTS.Application.Dto
         public string? Ma { get; set; }
         [MaxLength(100)]
         public string? Name { get; set; }
+        public string? Ma { get; set; }
+        public string? Ten { get; set; }
+        public string? Ma { get; set; }
+        public string? Ten { get; set; }
+        public string? Ma { get; set; }
+        public string? Ten { get; set; }
+        public string? Ma { get; set; }
+        public string? Ten { get; set; }
     }
 }
