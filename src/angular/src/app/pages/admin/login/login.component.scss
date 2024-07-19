@@ -64,4 +64,24 @@
     border-radius: 100%;
     right: 16px; cursor: pointer; z-index: 1
 }
+.image-login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    box-sizing: border-box;
+
+    .image-login {
+        background:url(../../../../assets/images/login-bg.jpg) repeat; 
+        float: left;
+        width: 100%;
+        padding: 4%; height: 100vh;
+    }
+
+    .text-image-login {
+        font-size: 20px;
+        background-color: antiquewhite;
+        font-weight: 500;
+    }
+}
 /*End */

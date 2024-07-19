@@ -9,6 +9,7 @@ import { AccountService } from '../../../shared/services/account.service';
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
+  isAdminLogin: boolean = false;
 
   constructor(private accountService: AccountService,private fb: FormBuilder,private router: Router ) { }
 
@@ -29,6 +30,29 @@ export class LoginComponent implements OnInit {
           // Xử lý phản hồi từ AuthService nếu cần
           if(response.isAdmin){
             this.router.navigateByUrl('/main');
+          }
+          console.log(response);
+          // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng nhập thành công
+        },
+        error => {
+          // Xử lý lỗi nếu có
+          console.error(error);
+        }
+      );
+    }
+  }
+
+  submitFormWithAdmin(): void {
+    if (this.loginForm.valid) {
+      const username = this.loginForm.get('username')!.value;
+      const password = this.loginForm.get('password')!.value;
+      
+      this.accountService.login(username, password).subscribe(
+        response => {
+          // Xử lý phản hồi từ AuthService nếu cần
+          if(response.isAdmin){
+            this.router.navigateByUrl('/main');
+            this.isAdminLogin = true
           }
           console.log(response);
           // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng nhập thành công

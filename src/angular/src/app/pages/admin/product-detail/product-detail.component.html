@@ -51,5 +51,17 @@
         <button nz-button nzType="primary" [disabled]="!productDetailForm.valid">Submit</button>
       </nz-form-control>
     </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSpan]="4" nzRequired>Product Entity ID</nz-form-label>
+      <nz-form-control [nzSpan]="8">
+        <nz-input-number formControlName="productEntityId"></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="12" nzOffset="4">
+        <button nz-button nzType="primary" [disabled]="!productDetailForm.valid">Submit</button>
+      </nz-form-control>
+    </nz-form-item>
   </form>
   
