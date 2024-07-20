@@ -38,5 +38,9 @@ namespace App.Helper
         public static string EmailHost = !string.Equals(AppSetting("EmailHost"), null, StringComparison.Ordinal) ? AppSetting("EmailHost") : "smtp.gmail.com";
         public static string EmailUserName = !string.Equals(AppSetting("EmailUserName"), null, StringComparison.Ordinal) ? AppSetting("EmailUserName") : "theuniverse500.company@gmail.com";
         public static string EmailPassword = !string.Equals(AppSetting("EmailPassword"), null, StringComparison.Ordinal) ? AppSetting("EmailPassword") : "nlfclqbagoqsqosn";
+        public static string DomainAdmin = !string.Equals(AppSetting("Domain"), null, StringComparison.Ordinal) ? AppSetting("Domain") : "";
+        public static string EmailHostAdmin = !string.Equals(AppSetting("EmailHost"), null, StringComparison.Ordinal) ? AppSetting("EmailHost") : "smtp.gmail.com";
+        public static string EmailUserNameAdmin = !string.Equals(AppSetting("EmailUserName"), null, StringComparison.Ordinal) ? AppSetting("EmailUserName") : "theuniverse500.company@gmail.com";
+        public static string EmailPasswordAdmin = !string.Equals(AppSetting("EmailPassword"), null, StringComparison.Ordinal) ? AppSetting("EmailPassword") : "nlfclqbagoqsqosn";
     }
 }

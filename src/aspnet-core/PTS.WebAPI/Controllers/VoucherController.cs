@@ -1,8 +1,10 @@
 ﻿
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PTS.Application.Features.Voucher.Commands;
 using PTS.Application.Features.Voucher.Queries;
+using PTS.Domain.Entities;
 
 namespace PTS.WebAPI.Controllers
 {
@@ -10,22 +12,6 @@ namespace PTS.WebAPI.Controllers
 	[ApiController]
 	public class VoucherController : BaseController
 	{
-		private readonly IMediator _mediator;
-		public VoucherController(IMediator mediator)
-		{
-			_mediator = mediator;
-		}
-		[HttpGet("GetAll")]
-		public async Task<IActionResult> GetAll()
-		{
-			return Ok(await _mediator.Send(new VoucherGetAllQuery()));
-		}
-		
-		[HttpPost("GetPage")]
-		public async Task<IActionResult> GetPage(VoucherGetPageQuery query)
-		{
-			return Ok(await _mediator.Send(query));
-		}
 		[HttpPost("GetById")]
 		public async Task<IActionResult> GetById(VoucherGetByIdQuery query)
 		{
@@ -46,5 +32,42 @@ namespace PTS.WebAPI.Controllers
 		{
 			return Ok(await _mediator.Send(command));
 		}
-	}
+
+
+        private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        public RoleController(IMapper mapper, IUnitOfWork unitOfWork)
+        {
+            _mapper = mapper;
+            _unitOfWork = unitOfWork;
+        }
+        [HttpGet("GetList")]
+        public async Task<IActionResult> GetList()
+        {
+            return Ok(await _unitOfWork._roleRepository.GetList());
+        }
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok(await _unitOfWork._roleRepository.GetById(id));
+        }
+        [HttpPost("CreateOrUpdateAsync")]
+        public async Task<IActionResult> CreateOrUpdateAsync(RoleDto objDto)
+        {
+            var obj = _mapper.Map<RoleEntity>(objDto);
+            if (objDto.Id > 0)
+            {
+                return Ok(await _unitOfWork._roleRepository.Update(obj));
+            }
+            else
+            {
+                return Ok(await _unitOfWork._roleRepository.Create(obj));
+            }
+        }
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return Ok(await _unitOfWork._roleRepository.Delete(id));
+        }
+    }
 }

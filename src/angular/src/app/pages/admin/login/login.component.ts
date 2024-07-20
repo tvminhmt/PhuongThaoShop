@@ -20,28 +20,6 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
-    if (this.loginForm.valid) {
-      const username = this.loginForm.get('username')!.value;
-      const password = this.loginForm.get('password')!.value;
-      
-      this.accountService.login(username, password).subscribe(
-        response => {
-          // Xử lý phản hồi từ AuthService nếu cần
-          if(response.isAdmin){
-            this.router.navigateByUrl('/main');
-          }
-          console.log(response);
-          // Chuyển hướng hoặc thực hiện các hành động khác sau khi đăng nhập thành công
-        },
-        error => {
-          // Xử lý lỗi nếu có
-          console.error(error);
-        }
-      );
-    }
-  }
-
   submitFormWithAdmin(): void {
     if (this.loginForm.valid) {
       const username = this.loginForm.get('username')!.value;

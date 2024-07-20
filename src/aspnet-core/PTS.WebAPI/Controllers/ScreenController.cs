@@ -5,6 +5,7 @@ using PTS.Shared.Dto;
 using PTS.Application.Dto;
 using PTS.Domain.Entities;
 using PTS.Application.Interfaces.Repositories;
+using MediatR;
 
 namespace PTS.WebAPI.Controllers
 {
@@ -12,28 +13,6 @@ namespace PTS.WebAPI.Controllers
     [ApiController]
     public class ScreenController : BaseController
     {
-        private readonly IMapper _mapper;
-        private readonly IUnitOfWork _unitOfWork;
-        public ScreenController(IMapper mapper, IUnitOfWork unitOfWork)
-        {
-            _mapper = mapper;
-            _unitOfWork = unitOfWork;
-        }
-        [HttpGet("GetList")]
-        public async Task<IActionResult> GetList()
-        {
-            return Ok(await _unitOfWork._screenRepository.GetList());
-        }
-        [HttpPost("GetPaged")]
-        public async Task<IActionResult> GetPaged(PagedRequestDto request)
-        {
-            return Ok(await _unitOfWork._screenRepository.GetPagedAsync(request));
-        }
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            return Ok(await _unitOfWork._screenRepository.GetById(id));
-        }
         [HttpPost("CreateOrUpdateAsync")]
         public async Task<IActionResult> CreateOrUpdateAsync(ScreenDto objDto)
         {
