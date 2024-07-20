@@ -64,4 +64,29 @@ export class LoginComponent implements OnInit {
       );
     }
   }
+
+  onSubmit(): void {
+    if (this.loginForm.valid) {
+      const formData = new FormData();
+      Object.keys(this.loginForm.controls).forEach(key => {
+        formData.append(key, this.loginForm.get(key)?.value);
+      });
+      this.fileList.forEach((file, index) => {
+        formData.append(`files`, file as any);
+      });
+
+      this.http.post('https://localhost:44302/api/ProductDetail/Create', formData).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.message.success('Product detail created successfully!');
+          } else {
+            this.message.error('Failed to create product detail');
+          }
+        },
+        (err) => {
+          this.message.error('An error occurred while creating product detail');
+        }
+      );
+    }
+  }
 }

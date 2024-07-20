@@ -91,4 +91,37 @@ export class RamComponent implements OnInit {
       }
     );
   }
+
+  onSubmit(): void {
+    if (this.productDetailForm.valid) {
+      const formData = new FormData();
+      Object.keys(this.productDetailForm.controls).forEach(key => {
+        formData.append(key, this.productDetailForm.get(key)?.value);
+      });
+      this.fileList.forEach((file, index) => {
+        formData.append(`files`, file as any);
+      });
+
+      this.http.post('https://localhost:44302/api/ProductDetail/Create', formData).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.message.success('Product detail created successfully!');
+          } else {
+            this.message.error('Failed to create product detail');
+          }
+        },
+        (err) => {
+          this.message.error('An error occurred while creating product detail');
+        }
+      );
+    }
+  }
+
+  handleChangeProduct(info: { file: NzUploadFile }): void {
+    if (info.file.status === 'done') {
+      this.message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      this.message.error(`${info.file.name} file upload failed`);
+    }
+  }
 }

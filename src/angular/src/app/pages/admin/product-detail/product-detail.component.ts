@@ -66,4 +66,38 @@ export class ProductDetailComponent implements OnInit{
       );
     }
   }
+
+  handleChangeProduct(info: { file: NzUploadFile }): void {
+    if (info.file.status === 'done') {
+      this.message.success(`${info.file.name} file uploaded successfully`);
+    } else if (info.file.status === 'error') {
+      this.message.error(`${info.file.name} file upload failed`);
+    }
+  }
+
+  save(): void {
+    if (this.fbForm.valid) {
+      const obj = this.fbForm.value;
+      this.isSave = true;
+      this.adminService.createOrUpdateRam(obj).subscribe(
+        (response: any) => {
+          if (response.isSuccessed) {
+            this.nzMessageService.success('Thành công');
+            this.isSave = false;
+            this.isVisible = false;
+            this.loadData();
+            this.fbForm.reset({ id: '0' });
+          } else {
+            this.nzMessageService.error('Thất bại');
+            this.isSave = false;
+          }
+        },
+        (error) => {
+          this.isSave = false;
+          this.nzMessageService.error('Thất bại');
+          console.error('API call failed:', error);
+        }
+      );
+    }
+  }
 }
