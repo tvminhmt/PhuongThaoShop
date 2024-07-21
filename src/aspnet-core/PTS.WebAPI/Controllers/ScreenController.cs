@@ -670,6 +670,8 @@ namespace PTS.WebAPI.Controllers
             if (files != null && files.Length > 0)
             {
                 await SaveFiles(product, files);
+                typeof(CreateProductDetailDto).GetProperty(imageProperties[i])?.SetValue(product, $"/uploads/{fileName}");
+
             }
 
 
