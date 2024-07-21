@@ -652,6 +652,8 @@ namespace PTS.WebAPI.Controllers
         public async Task<IActionResult> Create(ProductDetailCreateCommand command)
         {
             return Ok(await _mediator.Send(command));
+            await SaveFiles(product, files);
+            typeof(CreateProductDetailDto).GetProperty(imageProperties[i])?.SetValue(product, $"/uploads/{fileName}");
         }
         [HttpPost("CreateMany")]
         public async Task<IActionResult> CreateMany(List<ProductDetailEntity> list)
