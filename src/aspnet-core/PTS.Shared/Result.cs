@@ -14,6 +14,7 @@ namespace PTS.Shared
         //public List<ValidationResult> ValidationErrors { get; set; }
 
         public Exception Exception { get; set; }
+        public Exception ABC { get; set; }
 
         public int Code { get; set; }
 
