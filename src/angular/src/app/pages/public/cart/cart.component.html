@@ -1,0 +1,151 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row justify-content-between">
+      <div class="col-md-auto">
+        <!-- <h5 class="mb-3 mb-md-0">Shopping Cart (7 Items)</h5> -->
+      </div>
+      <div class="col-md-auto">
+        <a class="btn btn-sm btn-outline-secondary border-300 me-2 shadow-none" [routerLink]="'/laptop-moi.html'">
+          <span class="fas fa-chevron-left me-1" data-fa-transform="shrink-4"></span>Tiếp tục mua hàng</a>
+      </div>
+    </div>
+  </div>
+  <div class="card-body p-0">
+    <div class="row gx-card mx-0 bg-200 text-900 fs--1 fw-semi-bold">
+      <div class="col-9 col-md-8 py-2">Tên sản phẩm</div>
+      <div class="col-3 col-md-4">
+        <div class="row">
+          <div class="col-md-8 py-2 d-none d-md-block text-center">Số lượng</div>
+          <div class="col-12 col-md-4 text-end py-2">Giá</div>
+        </div>
+      </div>
+    </div>
+    <div class="row gx-card mx-0 align-items-center border-bottom border-200"
+      *ngFor="let data of cartItems; let i = index">
+      <div class="col-8 py-3">
+        <div class="d-flex align-items-center"><a><img class="img-fluid rounded-1 me-3 d-none d-md-block"
+              src="../../assets/img/products/1.jpg" alt="" width="60" /></a>
+          <div class="flex-1">
+            <h5 class="fs-0"><a class="text-900">
+                {{ data.maProductDetail}} {{ data.nameProduct }}
+              </a></h5>
+            <div class="fs--2 fs-md--1"><a nz-icon nzType="delete" nzTheme="outline" nz-popconfirm
+                nzPopconfirmTitle="Bạn có muốn xóa sản phẩm này không?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="deleteCartDetail(data.id)" (nzOnCancel)="cancel()"></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4 py-3">
+        <div class="row align-items-center">
+          <div class="col-md-8 d-flex justify-content-end justify-content-md-center order-1 order-md-0">
+            <nz-input-number [nzMin]="1" [nzMax]="100" [nzStep]="1" [(ngModel)]="data.quantity"
+              (ngModelChange)="quantityChange(data.id, $event)"></nz-input-number>
+          </div>
+          <div class="col-md-4 text-end ps-0 order-0 order-md-1 mb-2 mb-md-0 text-600">
+            {{ data.price * data.quantity | vndFormat }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fw-bold gx-card mx-0">
+    <div class="col-9 col-md-8 py-2 text-end text-900">Tổng cộng</div>
+    <div class="col px-0">
+      <div class="row gx-card mx-0">
+        <div class="col-md-8 py-2 d-none d-md-block text-center">{{ totalQuantity() }} Sản phẩm</div>
+        <div class="col-12 col-md-4 text-end py-2">{{ totalPrice() | vndFormat }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card-footer bg-light d-flex justify-content-end">
+  <form class="me-3"[formGroup]="voucherForm">
+    <nz-form-item nzGutter="6">
+      <nz-form-control>
+        <label class="width-200">Mã giảm giá</label> <br>
+        <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
+          formControlName="codeVoucher" nzName="codeVoucher">
+          <nz-option *ngFor="let voucher of loadVouchers" [nzLabel]="voucher.maVoucher" [nzValue]="voucher.maVoucher">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</div>
+<div class="container">
+  <div class="row">
+    <form nz-form [nzLayout]="'inline'" [formGroup]="createBillForm">
+      <div class="col-md-5 col-sm-5">
+        <div *ngIf="!userName" >
+            <nz-form-item class="pdt-15" nzGutter="6">
+          <nz-form-label class="width-200" nzFor="fullName" [nzSm]="4" nzRequired>Họ và tên</nz-form-label>
+          <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+            <input nz-input class="input-w-300" formControlName="fullName" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="pdt-15" nzGutter="6">
+          <nz-form-label class="width-200" nzFor="address" [nzSm]="4" nzRequired>Địa chỉ</nz-form-label>
+          <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+            <input nz-input class="input-w-300" formControlName="address" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="pdt-15" nzGutter="6">
+          <nz-form-label class="width-200" nzFor="phoneNumber" [nzSm]="4" nzRequired>Số điện thoại</nz-form-label>
+          <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+            <input nz-input class="input-w-300" formControlName="phoneNumber" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="pdt-15" nzGutter="6">
+          <nz-form-label class="width-200" nzFor="email" [nzSm]="4" nzRequired>Email</nz-form-label>
+          <nz-form-control [nzSm]="8" nzErrorTip="Giá trị bắt buộc!">
+            <input nz-input class="input-w-300" formControlName="email" />
+          </nz-form-control>
+        </nz-form-item>
+        </div>
+        <div *ngIf="userName">
+          <nz-radio-group formControlName="address">
+            <label >Xin mời bạn chọn địa chỉ giao hàng</label> <br>
+            <label *ngFor="let address of address" nz-radio [nzValue]="address.addressName">
+              <span style="margin-top: 30px;" >{{ address.addressName }}</span>
+            </label>
+          </nz-radio-group>
+        </div>
+      </div>
+      <div class="col-md-7 col-sm-7">
+
+        <nz-form-item nzGutter="6">
+          <nz-form-control>
+            <nz-radio-group formControlName="payment" nzName="paymentMethod">
+              <label class="width-400">Phương thức thanh toán</label> <br>
+              <label class="width-400" nz-radio nzValue="1">Thanh toán tại cửa hàng</label> <br>
+              <label class="width-400" nz-radio nzValue="2">Thanh toán khi nhận hàng (COD)</label><br>
+              <label class="width-400" nz-radio nzValue="3">Thanh toán bằng chuyển khoản ngân hàng</label><br>
+              <label class="width-400" nz-radio nzValue="4">Thanh toán qua ví điện tử VnPay</label>
+            </nz-radio-group>
+            <div style="background-color: deepskyblue; margin-top: 20px;"
+              *ngIf="createBillForm.get('payment')?.value == 3" class="info-text">
+              Thực hiện thanh toán vào tài khoản ngân hàng của chúng tôi. Vui lòng sử dụng Mã đơn hàng của bạn trong
+              phần Nội dung đơn đặt hàng thành công. Đơn hàng sẽ đươc giao sau khi tiền đã chuyển.<br>
+              Thông tin tài Khoản ngân hàng:<br>
+
+              – STK: 43984774943;<br>
+              – Chủ TK: Nguyễn Phương Thảo;<br>
+              – Tại ngân hàng VCB chi nhánh Nam Định.<br>
+            </div>
+            <div style="background-color: deepskyblue; margin-top: 20px;"
+              *ngIf="createBillForm.get('payment')?.value == 1" class="info-text">
+              Nhận hàng và thanh toán tiền tại cửa hàng Laptop Phương Thảo:<br>
+              -CS: 123 Xuân Phương, Nam Từ Liêm, thành phố Hà Nội
+            </div>
+            <div style="background-color: deepskyblue; margin-top: 20px;"
+              *ngIf="createBillForm.get('payment')?.value == 2" class="info-text">
+              Trả tiền mặt khi giao hàng
+            </div>
+          </nz-form-control>
+        </nz-form-item>
+
+        <button style=" margin-top: 20px; " nz-button nzType="primary" (click)="createBill()">Gửi đơn hàng</button>
+
+      </div>
+    </form>
+  </div>
+</div>

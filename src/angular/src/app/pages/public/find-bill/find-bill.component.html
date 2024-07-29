@@ -1,0 +1,116 @@
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row justify-content-between align-items-center">
+            <div class="col-md">
+                <h5 class="mb-2 mb-md-0"></h5>
+            </div>
+            <div class="col-auto"><button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button"
+                    (click)="downloadPDF()"><span class="fas fa-arrow-down me-1"> </span>Tải hóa đơn (.pdf)</button>
+                <button class="btn btn-falcon-default btn-sm me-1 mb-2 mb-sm-0" type="button" (click)="print()"><span
+                        class="fas fa-print me-1"> </span>In hóa đơn</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="printInvoice">
+    <div class="container mw-700">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row align-items-center text-center mb-3">
+                    <div class="col-sm-6 text-sm-start"><img src="../../../../assets/images/PT Shop.svg"
+                            width="150" /></div>
+                    <div class="col text-sm-end mt-3 mt-sm-0">
+                        <h2 class="mb-3">Hóa Đơn Bán Hàng</h2>
+                        <h5>Phương Thảo Shop</h5>
+                        <p class="fs--1 mb-0">123 Xuân Phương<br />Nam Từ Liêm thành phố Hà Nội</p>
+                    </div>
+                    <div class="col-12">
+                        <hr />
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="col">
+                         <h5>Khách hàng: {{billData.fullName}}</h5>
+                         <h5>Địa chỉ: {{billData.address}}</h5>
+                         <h5>Số điện thoại: {{billData.phoneNumber}}</h5>
+                    </div>
+                    <div class="col-sm-auto ms-auto">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-borderless fs--1">
+                                <tbody>
+                                    <tr>
+                                        <th class="text-sm-end">Mã hóa đơn:</th>
+                                        <td>{{billData.invoiceCode}}</td>
+                                    </tr>
+                                    <tr>
+                                    <tr>
+                                        <th class="text-sm-end">Ngày tạo:</th>
+                                        <td>{{billData.createDate | date: 'dd/MM/yyyy HH:mm' }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-sm-end">Phương thức thanh toán:</th>
+                                        <td>{{billData.stringPayment}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-sm-end">Trạng thái thanh toán:</th>
+                                        <td>{{billData.paymentStatus}}</td>
+                                    </tr>
+                                    <tr class="alert alert-success fw-bold">
+                                        <th class="text-sm-end">Thành tiền:</th>
+                                        <td>{{billData.intoMoney | vndFormat}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive scrollbar mt-4 fs--1">
+                    <table class="table table-striped border-bottom">
+                        <thead data-bs-theme="light">
+                            <tr class="bg-primary text-white dark__bg-1000">
+                                <th class="border-0">Sản Phẩm</th>
+                                <th class="border-0 text-center">Giá</th>
+                                <th class="border-0 text-end">Số lượng</th>
+                                <th class="border-0 text-end">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let data of billData.billDetail; let i = index">
+                                <td class="align-middle">
+                                    <p class="mb-0">{{data.codeProductDetail}}</p>
+                                </td>
+                                <td class="align-middle text-center">{{data.price | vndFormat}}</td>
+                                <td class="align-middle text-end">{{data.quantity}}</td>
+                                <td class="align-middle text-end">{{data.price * data.quantity | vndFormat}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-end">
+                    <div class="col-auto">
+                        <table class="table table-sm table-borderless fs--1 text-end">
+                            <tr>
+                                <th class="text-900">Tổng tiền:</th>
+                                <td class="fw-semi-bold">{{billData.total | vndFormat}} </td>
+                            </tr>
+                            <tr>
+                                <th class="text-900">Giảm giá:</th>
+                                <td class="fw-semi-bold">{{billData.giamGia | vndFormat}}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-900">Phí ship:</th>
+                                <td class="fw-semi-bold">{{0 | vndFormat}}</td>
+                            </tr>
+                            <tr class="border-top">
+                                <th class="text-900">Thành tiền:</th>
+                                <td class="fw-semi-bold">{{billData.intoMoney | vndFormat}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

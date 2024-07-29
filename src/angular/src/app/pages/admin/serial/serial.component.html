@@ -1,0 +1,8 @@
+<nz-upload
+  [nzAction]="'https://localhost:44302/api/serial/upload'"
+  nzAccept=".xlsx"
+  (nzChange)="handleChange($event)">
+  <button nz-button>
+    <i nz-icon nzType="upload"></i> Tải lên tệp Excel
+  </button>
+</nz-upload>

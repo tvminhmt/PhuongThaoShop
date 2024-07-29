@@ -1,0 +1,22 @@
+<div class="login-container">
+    <nz-card class="login-card">
+      <h1 class="login-title">Đăng Nhập</h1>
+      <form nz-form [formGroup]="loginForm" (ngSubmit)="submitForm()">
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập tên đăng nhập">
+            <input nz-input formControlName="userName" placeholder="Tên đăng nhập" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control nzErrorTip="Vui lòng nhập mật khẩu">
+            <input nz-input type="password" formControlName="password" placeholder="Mật khẩu" />
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item class="login-form-button">
+          <button nz-button nzType="primary">Đăng Nhập</button>
+        </nz-form-item>
+      </form>
+    </nz-card>
+  </div>
+
+  

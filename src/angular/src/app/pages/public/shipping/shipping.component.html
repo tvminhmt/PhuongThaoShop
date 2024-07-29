@@ -1,0 +1,38 @@
+<div>
+    <h2>Tính phí ship giao hàng nhanh</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div>
+        <label for="weight">Trọng lượng (gram):</label>
+        <input type="number" id="weight" [(ngModel)]="weight" name="weight" required>
+      </div>
+      <div>
+        <label for="length">Chiều dài (cm):</label>
+        <input type="number" id="length" [(ngModel)]="length" name="length" required>
+      </div>
+      <div>
+        <label for="width">Chiều rộng (cm):</label>
+        <input type="number" id="width" [(ngModel)]="width" name="width" required>
+      </div>
+      <div>
+        <label for="height">Chiều cao (cm):</label>
+        <input type="number" id="height" [(ngModel)]="height" name="height" required>
+      </div>
+      <div>
+        <label for="toDistrictID">Mã quận/huyện nhận:</label>
+        <input type="number" id="toDistrictID" [(ngModel)]="toDistrictID" name="toDistrictID" required>
+      </div>
+      <div>
+        <label for="serviceTypeID">Mã dịch vụ:</label>
+        <input type="number" id="serviceTypeID" [(ngModel)]="serviceTypeID" name="serviceTypeID" required>
+      </div>
+      <button type="submit">Tính phí</button>
+    </form>
+  
+    <div *ngIf="shippingFee !== null">
+      <h3>Phí ship: {{ shippingFee }} VND</h3>
+    </div>
+    <div *ngIf="errorMessage !== null">
+      <h3>{{ errorMessage }}</h3>
+    </div>
+  </div>
+  
