@@ -1,6 +1,0 @@
-@PTS.WebAPI_HostAddress = http://localhost:5023
-
-GET {{PTS.WebAPI_HostAddress}}/Bill/
-Accept: application/json
-
-###
