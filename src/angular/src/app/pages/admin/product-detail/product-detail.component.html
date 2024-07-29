@@ -36,14 +36,14 @@
           <a (click)="delete(item.id)">
             <span class="kt-font-danger">
               <i nz-icon nzType="delete" nzTheme="outline"></i>
-            </span>
+            </span> 
           </a>
         </ng-container>
       </td>
     </tr>
   </tbody>
 </nz-table>
-<ckeditor [editor]="Editor"></ckeditor>
+<!-- <ckeditor [editor]="Editor"></ckeditor> -->
 <!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="close()" (click)="save()" [nzWidth]="'50%'">
   <nz-layout *nzModalContent>
     <form nz-form [formGroup]="fbForm" style="background-color:white;">

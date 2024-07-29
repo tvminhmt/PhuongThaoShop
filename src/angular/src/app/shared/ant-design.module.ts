@@ -31,7 +31,6 @@ import { NzResultModule } from 'ng-zorro-antd/result';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 registerLocaleData(en);
 @NgModule({
 exports:[
@@ -63,7 +62,6 @@ exports:[
     NzResultModule,
     ReactiveFormsModule,
     FormsModule,
-    CKEditorModule,
 ],
  providers: [
     { provide: NZ_I18N, useValue: en_US }

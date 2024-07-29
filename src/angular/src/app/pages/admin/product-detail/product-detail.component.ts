@@ -5,7 +5,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpClient } from '@angular/common/http';
 import { ProductDetailGetPageDto } from 'src/app/shared/models/model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-import * as ClassicEditor from '@ckeditor/ckeditor5-basic-styles';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -15,7 +14,7 @@ export class ProductDetailComponent implements OnInit{
   productDetailForm!: FormGroup;
   listData: ProductDetailGetPageDto[] = [];
   fileList: NzUploadFile[] = [];
-  public Editor = ClassicEditor;
+  // public Editor = ClassicEditor;
   constructor(
     private adminService: AdminService,
     private fb: FormBuilder,
