@@ -135,8 +135,59 @@ export interface VoucherCreateDto {
 }
 export interface RamDto {
   id: number;
-  ma?: string;
+  ma: string;
   thongSo?: string;
+}
+export interface CpuDto {
+  id: number;
+  ma: string;
+  ten?: string;
+}
+export interface CardVGADto {
+  id: number;
+  ma: string;
+  thongSo?: string;
+  crUserId?: number;
+  crDateTime?: Date;
+  status: number;
+}
+export interface HardDriveDto {
+  id: number;
+  ma: string;
+  thongSo?: string;
+  crUserId?: number;
+  crDateTime?: Date;
+  status: number;
+}
+export interface ScreenDto {
+  id: number;
+  ma: string;
+  kichCo?: string;
+  tanSo?: string;
+  chatLieu?: string;
+  crUserId?: number;
+  crDateTime?: Date;
+  status: number;
+}
+export interface ColorDto {
+  id: number;
+  ma: string;
+  name?: string;
+  crUserId?: number;
+  crDateTime?: Date;
+  status: number;
+}
+export interface ProductDto {
+  id: number;
+  name: string;
+  crUserId?: number;
+  crDateTime?: Date;
+  status: number;
+}
+export interface DiscountDto {
+  id: number;
+  code: string;
+  Percentage: number;
 }
 export interface BillDto {
   id: number;

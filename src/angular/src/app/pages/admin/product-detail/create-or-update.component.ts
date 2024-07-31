@@ -1,48 +1,85 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { AdminService } from '../../../shared/services/admin.service';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpClient } from '@angular/common/http';
 import { ProductDetailGetPageDto } from 'src/app/shared/models/model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
+
+import {RamDto, CpuDto, CardVGADto, HardDriveDto,ScreenDto,ColorDto,
+   ProductDto , DiscountDto} from '../../../shared/models/model';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  selector: 'app-create-or-update',
+  templateUrl: './create-or-update.component.html',
+  // styleUrls: ['./create-or-update.component.scss']
 })
-export class ProductDetailComponent implements OnInit{
+export class CreateOrUpdateProductDetailComponent implements OnInit{
   productDetailForm!: FormGroup;
   listData: ProductDetailGetPageDto[] = [];
   fileList: NzUploadFile[] = [];
-   public Editor = ClassicEditor;
+  public Editor = ClassicEditor;
+  loadRams: RamDto[] = [];
+  loadCpus: CpuDto[] = [];
+  loadCardVGAs: CardVGADto[] = [];
+  loadHardDrives: HardDriveDto[] = [];
+  loadScreens: ScreenDto[] = [];
+  loadColors: ColorDto[] = [];
+  loadProducts: ProductDto[] = [];
+  loadDiscounts: DiscountDto[] = [];
   constructor(
     private adminService: AdminService,
     private fb: FormBuilder,
     private message: NzMessageService,
-    private http: HttpClient,
-    private router: Router
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
-    this.loadData();
+    this.loadCombobox();
     this.productDetailForm = this.fb.group({
       code: [null, [Validators.required, Validators.maxLength(50)]],
       price: [null, [Validators.required]],
       oldPrice: [null, [Validators.required]],
-      productEntityId: [null, [Validators.required]],
-      // Add more form controls as needed
+      upgrade: [null],
+      ram: [null],
+      discount: [null],
+      product: [null, [Validators.required]],
+      cpu: [null],
+      cardVGA: [null],
+      hardDrive: [null],
+      screen: [null],
+      color: [null],
+      description: [''],
     });
   }
-  loadData(): void {
-      this.adminService.getPageProductDetail(1,30,'').subscribe(response => {
-      console.log(response.data)
-      this.listData = response.data;
+  loadCombobox(): void{
+    this.adminService.getListRam().subscribe(data => {
+      this.loadRams = data.data;
+    });
+    this.adminService.getListCpu().subscribe(data => {
+      this.loadCpus = data;
+    });
+    this.adminService.getListCardVGA().subscribe(data => {
+      this.loadCardVGAs = data.data;
+    });
+    this.adminService.getListHardDrive().subscribe(data => {
+      this.loadHardDrives = data;
+    });
+    this.adminService.getListScreen().subscribe(data => {
+      this.loadScreens = data;
+    });
+    this.adminService.getListColor().subscribe(data => {
+      this.loadColors = data;
+    });
+    this.adminService.getListProduct().subscribe(data => {
+      this.loadProducts = data;
+    });
+    this.adminService.getListDiscount().subscribe(data => {
+      this.loadDiscounts = data.data;
     });
   }
   create(): void {
-    this.router.navigate(['/product-detail-create-or-update']);
+   
   }
   beforeUpload = (file: NzUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);

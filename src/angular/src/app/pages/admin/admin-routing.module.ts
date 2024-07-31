@@ -14,6 +14,7 @@ import { ImageComponent } from './image/image.component';
 import { SerialComponent } from './serial/serial.component';
 import { ManageBillComponent } from './manage-bill/manage-bill.component';
 import { BillDetailComponent } from './bill-detail/bill-detail.component';
+import { CreateOrUpdateProductDetailComponent } from './product-detail/create-or-update.component';
 const routes: Routes = [
   {
     //canActivate: [AuthGuard],
@@ -30,6 +31,7 @@ const routes: Routes = [
      { path: 'serial',component: SerialComponent},
      { path: 'manage-bill',component: ManageBillComponent},
      { path: 'bill-detail/:id',component: BillDetailComponent},
+     { path: 'product-detail-create-or-update',component: CreateOrUpdateProductDetailComponent},
     ], 
   }
 ];

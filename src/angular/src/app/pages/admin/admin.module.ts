@@ -16,6 +16,7 @@ import { ImageComponent } from './image/image.component';
 import { SerialComponent } from './serial/serial.component';
 import { ManageBillComponent } from './manage-bill/manage-bill.component';
 import { BillDetailComponent } from './bill-detail/bill-detail.component';
+import { CreateOrUpdateProductDetailComponent } from './product-detail/create-or-update.component';
 
 
 
@@ -33,7 +34,8 @@ import { BillDetailComponent } from './bill-detail/bill-detail.component';
     ImageComponent,
     SerialComponent,
     ManageBillComponent,
-    BillDetailComponent
+    BillDetailComponent,
+    CreateOrUpdateProductDetailComponent
   ],
   imports: [
     CommonModule,

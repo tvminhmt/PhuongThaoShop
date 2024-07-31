@@ -1,6 +1,13 @@
+
+
+
 <button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
   <i class="fa fa-plus"></i> Thêm mới
 </button>
+<div>
+
+
+</div>
 <nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
   <thead>
     <tr>
@@ -24,7 +31,6 @@
       <td>{{ item.upgrade }}</td>
       <td>{{ item.maRam}}</td>
       <td>{{ item.maCpu}}</td>
-    =
       <td>{{ item.status}}</td>
       <td>
         <ng-container *ngIf="item.status !== 8">

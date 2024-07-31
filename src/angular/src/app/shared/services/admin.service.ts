@@ -54,7 +54,7 @@ export class AdminService {
     });
   }
   getListRam(): Observable<any> {
-    return this.http.get(`${this.apiUrl}GetList`);
+    return this.http.get(`${this.apiUrl}Ram/GetAll`);
   }
 
   getPagedRam(request: PagedRequest): Observable<any> {
@@ -88,6 +88,31 @@ export class AdminService {
     });
     return this.http.post(`${this.apiUrl}Ram/Delete?id=${id}`, null, { headers: headers });
   }
+
+  getListProduct(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Product/GetList`);
+  }
+  getListDiscount(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Discount/GetAll`);
+  }
+
+  getListCpu(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Cpu/GetAll`);
+  }
+  getListCardVGA(): Observable<any> {
+    return this.http.get(`${this.apiUrl}CardVGA/GetAll`);
+  }
+  getListHardDrive(): Observable<any> {
+    return this.http.get(`${this.apiUrl}HardDrive/GetList`);
+  }
+  getListScreen(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Screen/GetList`);
+  }
+  getListColor(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Color/GetList`);
+  }
+
+
   deleteBill(id: number): Observable<any> {
     const token = this.accountService.getAccessToken();
     const headers = new HttpHeaders({
