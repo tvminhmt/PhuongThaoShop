@@ -33,13 +33,8 @@ namespace PTS.WebAPI
         {
             return Ok(await Mediator.Send(query));
         }
-        [HttpPost("Create")]
-        public async Task<IActionResult> Create(RamCreateCommand command)
-        {
-            return Ok(await Mediator.Send(command));
-        }
-        [HttpPost("Update")]
-        public async Task<IActionResult> Update(RamEditCommand command)
+        [HttpPost("CreateOrUpdate")]
+        public async Task<IActionResult> Create(RamCreateOrUpdateCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

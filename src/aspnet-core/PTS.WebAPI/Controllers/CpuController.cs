@@ -22,8 +22,8 @@ namespace PTS.WebAPI.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [HttpGet("GetList")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
             return Ok(await _unitOfWork._cpuRepository.GetList());
         }
