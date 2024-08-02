@@ -34,7 +34,7 @@ namespace PTS.WebAPI
             return Ok(await Mediator.Send(query));
         }
         [HttpPost("CreateOrUpdate")]
-        public async Task<IActionResult> Create(CardVGACreateOrUpdateCommand command)
+        public async Task<IActionResult> CreateOrUpdate(CardVGACreateOrUpdateCommand command)
         {
             return Ok(await Mediator.Send(command));
         }

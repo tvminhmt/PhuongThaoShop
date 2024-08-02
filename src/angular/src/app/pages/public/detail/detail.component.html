@@ -70,7 +70,8 @@ text-transform: uppercase;border-radius: 30px;"><i class="fa fa-gift" style="fon
                         <div class="tab-pane fade show active" id="tab-description" role="tabpanel"
                             aria-labelledby="description-tab">
                             <div class="mt-3">
-                               <p> {{ product.description }}</p>
+                                <p [innerHTML]="product.description"></p>
+
                             </div>
                         </div>
                         <div class="tab-pane fade" id="tab-specifications" role="tabpanel"

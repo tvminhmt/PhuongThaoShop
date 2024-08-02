@@ -5,16 +5,17 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { HttpClient } from '@angular/common/http';
 import { ProductDetailGetPageDto } from 'src/app/shared/models/model';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
-
-import {RamDto, CpuDto, CardVGADto, HardDriveDto,ScreenDto,ColorDto,
-   ProductDto , DiscountDto} from '../../../shared/models/model';
+import {
+  RamDto, CpuDto, CardVGADto, HardDriveDto, ScreenDto, ColorDto,
+  ProductDto, DiscountDto
+} from '../../../shared/models/model';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-create-or-update',
   templateUrl: './create-or-update.component.html',
   // styleUrls: ['./create-or-update.component.scss']
 })
-export class CreateOrUpdateProductDetailComponent implements OnInit{
+export class CreateOrUpdateProductDetailComponent implements OnInit {
   productDetailForm!: FormGroup;
   listData: ProductDetailGetPageDto[] = [];
   fileList: NzUploadFile[] = [];
@@ -27,32 +28,40 @@ export class CreateOrUpdateProductDetailComponent implements OnInit{
   loadColors: ColorDto[] = [];
   loadProducts: ProductDto[] = [];
   loadDiscounts: DiscountDto[] = [];
+  item: ProductDetailGetPageDto | null = null;
   constructor(
     private adminService: AdminService,
     private fb: FormBuilder,
     private message: NzMessageService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private nzMessageService: NzMessageService
+  ) { }
 
   ngOnInit(): void {
     this.loadCombobox();
+    this.item = history.state.item || null;
     this.productDetailForm = this.fb.group({
+      id: [0],
       code: [null, [Validators.required, Validators.maxLength(50)]],
       price: [null, [Validators.required]],
-      oldPrice: [null, [Validators.required]],
+      //  oldPrice: [null, [Validators.required]],
       upgrade: [null],
-      ram: [null],
-      discount: [null],
-      product: [null, [Validators.required]],
-      cpu: [null],
-      cardVGA: [null],
-      hardDrive: [null],
-      screen: [null],
-      color: [null],
+      ramEntityId: [null],
+      discountId: [null],
+      productEntityId: [null, [Validators.required]],
+      cpuEntityId: [null],
+      cardVGAEntityId: [null],
+      hardDriveEntityId: [null],
+      screenEntityId: [null],
+      colorEntityId: [null],
       description: [''],
     });
+    if (this.item) {
+      console.log(this.item)
+      this.productDetailForm.patchValue(this.item);
+    }
   }
-  loadCombobox(): void{
+  loadCombobox(): void {
     this.adminService.getListRam().subscribe(data => {
       this.loadRams = data.data;
     });
@@ -79,7 +88,7 @@ export class CreateOrUpdateProductDetailComponent implements OnInit{
     });
   }
   create(): void {
-   
+
   }
   beforeUpload = (file: NzUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
@@ -111,26 +120,28 @@ export class CreateOrUpdateProductDetailComponent implements OnInit{
   }
   onSubmit(): void {
     if (this.productDetailForm.valid) {
-      const formData = new FormData();
-      Object.keys(this.productDetailForm.controls).forEach(key => {
-        formData.append(key, this.productDetailForm.get(key)?.value);
-      });
-      this.fileList.forEach((file, index) => {
-        formData.append(`files`, file as any);
-      });
-
-      this.http.post('https://localhost:44302/api/ProductDetail/Create', formData).subscribe(
-        (res: any) => {
-          if (res.success) {
-            this.message.success('Product detail created successfully!');
+      const obj = this.productDetailForm.value;
+      this.adminService.createOrUpdateProductDetail(obj.id, obj.code, obj.description, obj.price, obj.update, obj.productEntityId,
+        obj.colorEntityId, obj.ramEntityId, obj.cpuEntityId, obj.hardDriveEntityId,
+        obj.status).subscribe(
+        (response: any) => {
+          console.log(response)
+          if (response.succeeded) {
+            this.nzMessageService.success(response.messages);
+            //   this.loadData();
           } else {
-            this.message.error('Failed to create product detail');
+            this.nzMessageService.error(response.messages);
           }
         },
-        (err) => {
-          this.message.error('An error occurred while creating product detail');
+        (error) => {
+          this.nzMessageService.error('Thất bại');
+          console.error('API call failed:', error);
         }
       );
     }
+    else {
+      this.nzMessageService.error('Hãy nhập đầy đủ giá trị');
+    }
   }
 }
+

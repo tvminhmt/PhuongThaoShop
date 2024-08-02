@@ -1,14 +1,13 @@
 <button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
   <i class="fa fa-plus"></i> Quay lại
 </button>
-<button type="button" nz-button nzType="primary" ><i nz-icon
-  nzType="save"></i>Lưu
-</button>
 <div>
 </div>
 <form [formGroup]="productDetailForm" (ngSubmit)="onSubmit()">
+  <input nz-input formControlName="id" [style.display]="'none'" />
+
   <div nz-row nzGutter="24">
-    <div nz-col [nzSpan]="4">
+    <div nz-col [nzSpan]="6">
       <nz-form-label nzRequired>Mã</nz-form-label>
       <nz-form-item>
         <nz-form-control>
@@ -16,7 +15,7 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="4">
+    <div nz-col [nzSpan]="6">
       <nz-form-label nzRequired>Giá bán</nz-form-label>
       <nz-form-item>
         <nz-form-control>
@@ -24,26 +23,14 @@
         </nz-form-control>
       </nz-form-item>
     </div>
-    <div nz-col [nzSpan]="4">
-      <nz-form-label nzRequired>Tên sản phẩm</nz-form-label>
-      <nz-form-item>
-        <nz-form-control>
-
-          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
-            formControlName="product">
-            <nz-option *ngFor="let item of loadProducts" [nzLabel]="item.name" [nzValue]="item.id">
-            </nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+   
     <div nz-col [nzSpan]="6">
       <nz-form-label nzRequired>Giảm giá</nz-form-label>
       <nz-form-item>
         <nz-form-control>
 
           <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
-            formControlName="discount">
+            formControlName="discountId">
             <nz-option *ngFor="let item of loadDiscounts" [nzLabel]="item.code" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -51,18 +38,31 @@
       </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
-      <nz-form-label nzRequired>Khả năng nâng cấp</nz-form-label>
+      <nz-form-label>Khả năng nâng cấp</nz-form-label>
       <nz-form-item>
         <nz-form-control>
-          <input nz-input formControlName="code" />
+          <input nz-input formControlName="upgrade" />
         </nz-form-control>
       </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Tên sản phẩm</nz-form-label>
       <nz-form-item>
         <nz-form-control>
-          <label class="width-200">Ram</label> <br>
-          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Ram" formControlName="ram">
+
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
+            formControlName="productEntityId">
+            <nz-option *ngFor="let item of loadProducts" [nzLabel]="item.name" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Ram</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Ram" formControlName="ramEntityId">
             <nz-option *ngFor="let item of loadRams" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -70,10 +70,10 @@
       </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>CPU</nz-form-label>
       <nz-form-item>
         <nz-form-control>
-          <label class="width-200">CPU</label> <br>
-          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn CPU" formControlName="cpu">
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn CPU" formControlName="cpuEntityId">
             <nz-option *ngFor="let item of loadCpus" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -81,11 +81,11 @@
       </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Card VGA</nz-form-label>
       <nz-form-item>
         <nz-form-control>
-          <label class="width-200">Card VGA</label> <br>
           <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Card VGA"
-            formControlName="cardVGA">
+            formControlName="cardVGAEntityId">
             <nz-option *ngFor="let item of loadCardVGAs" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -97,7 +97,7 @@
         <nz-form-control>
           <label class="width-200">Ổ cứng</label> <br>
           <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn ổ cứng"
-            formControlName="hardDrive">
+            formControlName="hardDriveEntityId">
             <nz-option *ngFor="let item of loadHardDrives" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -108,8 +108,7 @@
       <nz-form-item>
         <nz-form-control>
           <label class="width-200">Màn hình</label> <br>
-          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màn hình"
-            formControlName="screen">
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màn hình" formControlName="screenEntityId">
             <nz-option *ngFor="let item of loadScreens" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
@@ -120,16 +119,27 @@
       <nz-form-item>
         <nz-form-control>
           <label class="width-200">Màu sắc</label> <br>
-          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màu sắc"
-            formControlName="color">
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màu sắc" formControlName="colorEntityId">
             <nz-option *ngFor="let item of loadColors" [nzLabel]="item.ma" [nzValue]="item.id">
             </nz-option>
           </nz-select>
         </nz-form-control>
       </nz-form-item>
     </div>
-
     <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-control>
+          <label class="width-200">Trạng thái</label> <br>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn ổ cứng"
+            formControlName="hardDriveEntityId">
+            <nz-option *ngFor="let item of loadHardDrives" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <!-- <div nz-col [nzSpan]="6">
       <nz-form-item>
         <nz-form-label>Upload Images</nz-form-label>
         <nz-form-control>
@@ -141,21 +151,14 @@
           </nz-upload>
         </nz-form-control>
       </nz-form-item>
-    </div>
+    </div> -->
   </div>
 
-  <div nz-row nzGutter="16">
-    <div nz-col [nzSpan]="6">
-      <nz-form-item>
-        <nz-form-label nzRequired>Product Entity ID</nz-form-label>
-        <nz-form-control>
-          <nz-input-number formControlName="productEntityId"></nz-input-number>
-        </nz-form-control>
-      </nz-form-item>
-    </div>
+  <div nz-row nzGutter="24">
     <div nz-col [nzSpan]="24">
+      <nz-form-label>Mô tả</nz-form-label>
       <nz-form-item>
-        <nz-form-label>Mô tả</nz-form-label>
+
         <nz-form-control>
           <ckeditor style="min-height: 300px;" [editor]="Editor" formControlName="description"></ckeditor>
         </nz-form-control>
@@ -167,7 +170,7 @@
     <div nz-col [nzSpan]="24">
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary" [disabled]="!productDetailForm.valid">Submit</button>
+          <button nz-button nzType="primary" [disabled]="!productDetailForm.valid"><i nz-icon nzType="save"></i>Lưu</button>
         </nz-form-control>
       </nz-form-item>
     </div>

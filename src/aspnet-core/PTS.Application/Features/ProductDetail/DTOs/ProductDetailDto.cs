@@ -31,7 +31,7 @@ namespace PTS.Application.Features.ProductDetail.DTOs
         public int? HardDriveEntityId { get; set; }
         public int? ScreenEntityId { get; set; }
         public int? CardVGAEntityId { get; set; }
-
+        public int? DiscountId { get; set; }
 
     }
 }

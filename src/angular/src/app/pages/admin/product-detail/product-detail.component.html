@@ -33,10 +33,10 @@
       <td>{{ item.maCpu}}</td>
       <td>{{ item.status}}</td>
       <td>
-        <ng-container *ngIf="item.status !== 8">
+        <ng-container >
           <a  style="margin-right: 10px;">
             <span class="kt-font-success">
-              <i nz-icon nzType="edit" nzTheme="outline"></i>
+              <i nz-icon nzType="edit" (click)="edit(item)" nzTheme="outline"></i>
             </span>
           </a>
           <a (click)="delete(item.id)">
@@ -49,119 +49,3 @@
     </tr>
   </tbody>
 </nz-table>
-<!-- <ckeditor [editor]="Editor"></ckeditor> -->
-<!-- <nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="close()" (click)="save()" [nzWidth]="'50%'">
-  <nz-layout *nzModalContent>
-    <form nz-form [formGroup]="fbForm" style="background-color:white;">
-      <input nz-input formControlName="id" style="display: none;" />
-      <nz-form-item>
-        <nz-form-label nzFor="fullName" [nzSm]="4" nzRequired>Họ tên</nz-form-label>
-        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-          <input nz-input formControlName="fullName" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="address" [nzSm]="4" nzRequired>Địa chỉ</nz-form-label>
-        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-          <input nz-input formControlName="address" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="phoneNumber" [nzSm]="4" nzRequired>Số điện thoại</nz-form-label>
-        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-          <input nz-input formControlName="phoneNumber" />
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="payment" [nzSm]="4" nzRequired>Phương thức thanh toán</nz-form-label>
-        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-          <nz-select formControlName="payment" nzPlaceHolder="Phương thức thanh toán">
-            <nz-option [nzValue]="1" nzLabel="Thanh toán tại cửa hàng"></nz-option>
-            <nz-option [nzValue]="2" nzLabel="Thanh toán khi nhận hàng (COD)"></nz-option>
-            <nz-option [nzValue]="3" nzLabel="Thanh toán bằng chuyển khoản ngân hàng"></nz-option>
-            <nz-option [nzValue]="4" nzLabel="Thanh toán qua VNPAY"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzFor="status" [nzSm]="4" nzRequired>Trạng thái</nz-form-label>
-        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-          <nz-select formControlName="status" nzPlaceHolder="Chọn trạng thái">
-            <nz-option [nzValue]="0" nzLabel="Đã xóa"></nz-option>
-            <nz-option [nzValue]="2" nzLabel="Chờ xác nhận"></nz-option>
-            <nz-option [nzValue]="3" nzLabel="Chờ gửi hàng"></nz-option>
-            <nz-option [nzValue]="4" nzLabel="Đang giao hàng"></nz-option>
-            <nz-option [nzValue]="5" nzLabel="Giao hàng thành công"></nz-option>
-            <nz-option [nzValue]="6" nzLabel="Giao hàng thất bại"></nz-option>
-            <nz-option [nzValue]="7" nzLabel="Đã hủy"></nz-option>
-            <nz-option [nzValue]="8" nzLabel="Hoàn thành"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-    </form>
-  </nz-layout>
-  <div *nzModalFooter>
-    <button type="button" nz-button nzType="default" (click)="close()">Đóng</button>
-    <button type="button" nz-button nzType="primary" (click)="save()"><i nz-icon
-                                                                                              nzType="save"></i>Lưu
-    </button>
-</div>
-</nz-modal> -->
-
-
-<!-- <form [formGroup]="productDetailForm" (ngSubmit)="onSubmit()">
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzRequired>Code</nz-form-label>
-      <nz-form-control [nzSpan]="8">
-        <input nz-input formControlName="code" />
-      </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzRequired>Price</nz-form-label>
-      <nz-form-control [nzSpan]="8">
-        <nz-input-number formControlName="price"></nz-input-number>
-      </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzRequired>Old Price</nz-form-label>
-      <nz-form-control [nzSpan]="8">
-        <nz-input-number formControlName="oldPrice"></nz-input-number>
-      </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4">Upload Images</nz-form-label>
-      <nz-form-control [nzSpan]="8">
-        <nz-upload
-          nzAction=""
-          [(nzFileList)]="fileList"
-          (nzChange)="handleChange($event)"
-          [nzBeforeUpload]="beforeUpload"
-          nzMultiple
-        >
-          <button nz-button>
-            <i nz-icon nzType="upload"></i> Select File
-          </button>
-        </nz-upload>
-      </nz-form-control>
-    </nz-form-item>
-    
-    <nz-form-item>
-      <nz-form-label [nzSpan]="4" nzRequired>Product Entity ID</nz-form-label>
-      <nz-form-control [nzSpan]="8">
-        <nz-input-number formControlName="productEntityId"></nz-input-number>
-      </nz-form-control>
-    </nz-form-item>
-  
-    <nz-form-item>
-      <nz-form-control [nzSpan]="12" nzOffset="4">
-        <button nz-button nzType="primary" [disabled]="!productDetailForm.valid">Submit</button>
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzSpan]="6" nzRequired>Editor</nz-form-label>
- 
-    </nz-form-item>
-  </form> -->

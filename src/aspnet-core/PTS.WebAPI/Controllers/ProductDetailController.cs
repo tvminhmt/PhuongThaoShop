@@ -10,6 +10,7 @@ using PTS.WebAPI.Controllers;
 using PTS.Application.Features.ProductDetail.Commands;
 using PTS.Application.Features.Voucher.Commands;
 using PTS.Application.Features.ProductDetail.Queries;
+using PTS.Application.Features.CardVGA.Commands;
 namespace PTS.WebAPI
 {
     [Route("api/[controller]")]
@@ -38,11 +39,6 @@ namespace PTS.WebAPI
         {
             return Ok(await _unitOfWork._productDetailRepository.GetListAsync());
         }
-        [HttpPost("GetPagedAsync")]
-        public async Task<IActionResult> GetPagedAsync(PagedRequestDto request)
-        {
-            return Ok(await _unitOfWork._productDetailRepository.GetPagedAsync(request));
-        }
         [HttpPost("GetPage")]
         public async Task<IActionResult> GetPage(ProductDetailGetPageQuery query)
         {
@@ -70,62 +66,54 @@ namespace PTS.WebAPI
             _reponse.Result = listProductDetail;
             return Ok(_reponse);
         }
-        [HttpPost("CreateOrUpdateAsync")]
-        public async Task<IActionResult> CreateOrUpdateAsync(CreateProductDetailDto objDto, IFormFile[] files)
+        [HttpPost("CreateOrUpdate")]
+        public async Task<IActionResult> CreateOrUpdate(ProductDetailCreateOrUpdateCommand command)
         {
-            var obj = _mapper.Map<ProductDetailEntity>(objDto);
-            CreateOrUpdateProductDetailQuery query = new CreateOrUpdateProductDetailQuery();
-            query.ProductDetailEntity = obj;
-            return Ok(await _mediator.Send(query));
+            return Ok(await Mediator.Send(command));
         }
-		[HttpPost("Create")]
-		public async Task<IActionResult> Create(ProductDetailCreateCommand command)
-		{
-			return Ok(await _mediator.Send(command));
-		}
-		[HttpPost("CreateMany")]
+        [HttpPost("Delete")]
+        public async Task<IActionResult> Delete(ProductDetailDeleteCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+        [HttpPost("CreateMany")]
         public async Task<IActionResult> CreateMany(List<ProductDetailEntity> list)
         {
 
             return BadRequest("Lỗi");
         }
-        [HttpDelete("id")]
-        public async Task<IActionResult> DeleteProductDetail(int id)
-        {
-            return Ok(await _repository.Delete(id));
-        }
-		[HttpPost]
-		public async Task<ActionResult<CreateProductDetailDto>> PostProduct([FromForm] CreateProductDetailDto product, IFormFile[] files)
-		{
-			if (files != null && files.Length > 0)
-			{
-				await SaveFiles(product, files);
-			}
+		//[HttpPost]
+		//public async Task<ActionResult<CreateProductDetailDto>> PostProduct([FromForm] CreateProductDetailDto product, IFormFile[] files)
+		//{
+		//	if (files != null && files.Length > 0)
+		//	{
+		//		await SaveFiles(product, files);
+		//	}
 
 		
 
-			return CreatedAtAction("GetProduct", new { id = product.Id }, product);
-		}
-		private async Task SaveFiles(CreateProductDetailDto product, IFormFile[] files)
-        {
-            string[] imageProperties = { "Image1", "Image2", "Image3", "Image4", "Image5", "Image6" };
+		//	return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+		//}
+		//private async Task SaveFiles(CreateProductDetailDto product, IFormFile[] files)
+  //      {
+  //          string[] imageProperties = { "Image1", "Image2", "Image3", "Image4", "Image5", "Image6" };
 
-            for (int i = 0; i < files.Length && i < imageProperties.Length; i++)
-            {
-                var file = files[i];
-                if (file != null && file.Length > 0)
-                {
-                    var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
-                    var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
+  //          for (int i = 0; i < files.Length && i < imageProperties.Length; i++)
+  //          {
+  //              var file = files[i];
+  //              if (file != null && file.Length > 0)
+  //              {
+  //                  var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+  //                  var filePath = Path.Combine(_environment.WebRootPath, "uploads", fileName);
 
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
+  //                  using (var stream = new FileStream(filePath, FileMode.Create))
+  //                  {
+  //                      await file.CopyToAsync(stream);
+  //                  }
 
-                    typeof(CreateProductDetailDto).GetProperty(imageProperties[i])?.SetValue(product, $"/uploads/{fileName}");
-                }
-            }
-        }
+  //                  typeof(CreateProductDetailDto).GetProperty(imageProperties[i])?.SetValue(product, $"/uploads/{fileName}");
+  //              }
+  //          }
+  //      }
     }
 }
