@@ -1,0 +1,84 @@
+
+<nz-table #basicTable [nzData]="billDetails" nzBordered nzSize="middle" [nzPageSize]="10">
+    <thead>
+      <tr>
+        <th nzWidth="10%">Mã chi tiết</th>
+        <th nzWidth="20%">Mã sản phẩm</th>
+        <th nzWidth="15%">Số lượng</th>
+        <th nzWidth="15%">Giá</th>
+        <th nzWidth="10%">Id hóa đơn</th>
+        <th nzWidth="10%">Id người tạo</th>
+        <th nzWidth="20%">Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of basicTable.data">
+        <td>{{ item.code }}</td>
+        <td>{{ item.codeProductDetail }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price | currency }}</td>
+        <td>{{ item.billEntityId }}</td>
+        <td>{{ item.crUserId }}</td>
+        <td>
+          <!-- <a (click)="editBillDetail(item)" style="margin-right: 10px;">
+            <span class="kt-font-success">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a (click)="deleteBillDetail(item.id)">
+            <span class="kt-font-danger">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </span>
+          </a> -->
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+<nz-modal nzTitle="Chi tiết hóa đơn" [nzWidth]="'50%'">
+    <form nz-form [formGroup]="fbForm" style="background-color:white;">
+      <input nz-input formControlName="id" style="display: none;" />
+      <nz-form-item>
+        <nz-form-label nzFor="code" [nzSm]="4" nzRequired>Mã chi tiết</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="code" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="codeProductDetail" [nzSm]="4">Mã sản phẩm</nz-form-label>
+        <nz-form-control [nzSm]="20">
+          <input nz-input formControlName="codeProductDetail" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="quantity" [nzSm]="4" nzRequired>Số lượng</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="quantity" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="price" [nzSm]="4" nzRequired>Giá</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="price" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="billEntityId" [nzSm]="4" nzRequired>Id hóa đơn</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="billEntityId" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="crUserId" [nzSm]="4">Id người tạo</nz-form-label>
+        <nz-form-control [nzSm]="20">
+          <input nz-input formControlName="crUserId" type="number" />
+        </nz-form-control>
+      </nz-form-item>
+      <div *nzModalFooter>
+        <!-- <button type="button" nz-button nzType="default" (click)="reset()">Làm lại</button>
+        <button type="button" nz-button nzType="primary" (click)="save()">Lưu</button>
+        <button type="button" nz-button nzType="danger" (click)="delete()">Xóa</button> -->
+      </div>
+    </form>
+  </nz-modal>
+  <button type="button" nz-button nzType="default" [routerLink]="'/manage-bill'">Đóng</button>
+  

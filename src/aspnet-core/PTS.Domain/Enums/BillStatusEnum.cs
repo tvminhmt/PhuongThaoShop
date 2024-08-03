@@ -5,30 +5,20 @@ namespace PTS.Core.Enums
 	public enum BillStatusEnum
 	{
 		[Display(Name = "Đã xóa")]
-		Delete = 1,
-
-		[Display(Name = "Hoạt động")]
+		Delete = 0,
+		[Display(Name = "Chờ xác nhận")]
 		Active = 2,
-
-        [Display(Name = "Đang chờ xử lý")]
-        Pending = 3,  
-        
-        [Display(Name = "Chưa thanh toán")]
-        Unpaid = 4,     
-        
-        [Display(Name = "Đã thanh toán")]
-        Paid = 5,   
-
+        [Display(Name = "Chờ gửi hàng")]
+        Pending = 3, 
         [Display(Name = "Đang giao hàng")]
-        Shipping = 6,    
-        
-        [Display(Name = "Bị hủy")]
+        Shipping = 4,
+        [Display(Name = "Giao hàng thành công")]
+        Shipping1 = 5,
+        [Display(Name = "Giao hàng thất bại")]
+        Shipping2 = 6,
+        [Display(Name = "Đã hủy")]
         Cancelled = 7,  
-        
-        [Display(Name = "Quá hạn")]
-        Overdue = 8,   
-        
         [Display(Name = "Hoàn thành")]
-        Completed = 9,    
+        Completed = 8,    
     }
 }

@@ -1,0 +1,127 @@
+<nz-breadcrumb>
+    <nz-breadcrumb-item [routerLink]="'/'">Trang Chủ</nz-breadcrumb-item>
+    <nz-breadcrumb-item>LapTop Mới</nz-breadcrumb-item>
+</nz-breadcrumb>
+<div class="card mb-3">
+    <div *ngIf="product" class="card-body">
+        <div class="row">
+            <div class="col-lg-6 mb-4 mb-lg-0">
+
+            </div>
+            <div class="col-lg-6">
+                <h5> {{ product.nameProduct }} {{ product.code }} ( {{ product.tenCpu }}, {{
+                    product.thongSoRam }},
+                    {{ product.thongSoHardDrive }}, {{ product.tenCardVGA }} {{ product.thongSoCardVGA }} {{
+                    product.kichCoManHinh }}
+                    {{ product.tanSoManHinh }} {{ product.chatLieuManHinh }} )</h5>
+                <!-- <div class="fs--2 mb-3 d-inline-block text-decoration-none"><span
+                        class="fa fa-star text-warning"></span><span class="fa fa-star text-warning"></span><span
+                        class="fa fa-star text-warning"></span><span class="fa fa-star text-warning"></span><span
+                        class="fa fa-star-half-alt text-warning star-icon"></span><span class="ms-1 text-600">(8)</span>
+                </div> -->
+                <p>Số lượng còn lại: {{product.availableQuantity}}</p>
+                <div class="promotion"
+                    style="border: 1px solid #16c60c;border-radius: 5px;position: relative;margin-bottom: 11px;    margin-top: 20px;">
+                    <p class="box_promotion" style="  position: absolute;margin-top: -19px;margin-left: 20px;padding: 6px 15px;color: white;background: #16c60c;
+text-transform: uppercase;border-radius: 30px;"><i class="fa fa-gift" style="font-size: 18px;margin-right: 5px;"></i>
+                        Quà tặng/khuyến mại</p>
+                    <ul style="padding-top: 25px;margin-left: 0;padding-left: 25px;">
+
+
+
+
+                        <p><span>✅ Tặng Windows 11 bản quyền theo m&aacute;y</span><br /><span>✅ Miễn ph&iacute;
+                                c&acirc;n m&agrave;u m&agrave;n h&igrave;nh c&ocirc;ng nghệ
+                                cao</span><br /><span>✅
+                                Balo thời trang</span><br /><span>✅ Chuột kh&ocirc;ng d&acirc;y + B&agrave;n di
+                                cao
+                                cấp</span><br /><span>✅ Tặng g&oacute;i c&agrave;i đặt, bảo dưỡng, vệ sinh
+                                m&aacute;y trọn đời</span>
+                    </ul>
+                </div>
+                <div class="row">
+                    <form #cartForm="ngForm">
+                        <div class="col-auto px-2 px-md-3">
+                            <nz-input-number [(ngModel)]="quantity" name="quantity" [nzMin]="1" [nzMax]="100"
+                                [nzStep]="1"></nz-input-number>
+
+                            <a class="btn btn-sm btn-primary mgl-20" (click)="addToCart(product.id, quantity)">
+                                <span class="fas fa-cart-plus me-sm-2"></span>
+                                <span class="d-none d-sm-inline-block">Thêm vào giỏ hàng</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="overflow-hidden mt-4">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item"><a class="nav-link active ps-0" id="description-tab" data-bs-toggle="tab"
+                                href="#tab-description" role="tab" aria-controls="tab-description"
+                                aria-selected="true">Mô tả sản phẩm</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 px-md-3" id="specifications-tab"
+                                data-bs-toggle="tab" href="#tab-specifications" role="tab"
+                                aria-controls="tab-specifications" aria-selected="false">Thông số chi tiêt</a></li>
+                
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="tab-description" role="tabpanel"
+                            aria-labelledby="description-tab">
+                            <div class="mt-3">
+                                <p [innerHTML]="product.description"></p>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tab-specifications" role="tabpanel"
+                            aria-labelledby="specifications-tab">
+                            <table class="table fs--1 mt-3">
+                                <tbody>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">CPU</td>
+                                        <td> {{ product.maCpu }} {{ product.tenCpu }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">RAM</td>
+                                        <td>{{ product.maRam }} {{ product.thongSoRam }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">SSD</td>
+                                        <td>{{ product.maHardDrive }} {{ product.thongSoHardDrive }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">Khả năng nâng cấp</td>
+                                        <td>{{ product.upgrade }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">Card VGA</td>
+                                        <td>{{ product.maCardVGA }} {{ product.tenCardVGA }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">Nhà sản xuất</td>
+                                        <td>{{ product.nameManufacturer }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">Màn hình</td>
+                                        <td>{{ product.kichCoManHinh }} {{ product.tanSoManHinh }} {{ product.chatLieuManHinh }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-100" style="width: 30%;">Màu sắc</td>
+                                        <td>{{ product.nameColor}}</td>
+                                    </tr>
+                                  
+                                  
+                                </tbody>
+                            </table>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!product">
+        <p>Loading...</p>
+    </div>
+</div>

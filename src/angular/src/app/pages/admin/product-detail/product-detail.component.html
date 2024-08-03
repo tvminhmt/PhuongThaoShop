@@ -1,0 +1,53 @@
+
+
+
+<button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
+  <i class="fa fa-plus"></i> Thêm mới
+</button>
+<div>
+
+
+</div>
+<nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
+  <thead>
+    <tr>
+      <th nzWidth="1%">STT</th>
+      <th nzWidth="10%">Mã CTSP</th>
+      <th nzWidth="10%">Tên sản phẩm</th>
+      <th nzWidth="10%">Hình ảnh</th>
+      <th nzWidth="10%">Giá bán</th>
+      <th nzWidth="10%">Giảm giá</th>
+      <th nzWidth="15%">Khả năng nâng cấp</th>
+      <th nzWidth="10%">Tình trạng thanh toán</th>
+      <th nzWidth="10%">Trạng thái</th>
+      <th nzWidth="5%">Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of basicTable.data">
+      <td>{{ item.stt}}</td>
+      <td>{{ item.code}}</td>
+      <td>{{ item.nameProduct}}</td>
+      <td>  <img style="width: 80%; height: 80%;" nz-image nzSrc="https://localhost:44302{{ item.imageMain }}" alt=""></td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.discount }}</td>
+      <td>{{ item.upgrade}}</td>
+      <td>{{ item.maCpu}}</td>
+      <td>{{ item.status}}</td>
+      <td>
+        <ng-container >
+          <a  style="margin-right: 10px;">
+            <span class="kt-font-success">
+              <i nz-icon nzType="edit" (click)="edit(item)" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a (click)="delete(item.id)">
+            <span class="kt-font-danger">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </span> 
+          </a>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>

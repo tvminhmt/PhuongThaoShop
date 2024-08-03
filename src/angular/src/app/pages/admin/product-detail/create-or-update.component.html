@@ -1,0 +1,182 @@
+<form [formGroup]="productDetailForm" (ngSubmit)="onSubmit()">
+  <input nz-input formControlName="id" [style.display]="'none'" />
+
+  <div nz-row nzGutter="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Mã</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input formControlName="code" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Giá bán</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-input-number formControlName="price" class="width-200"></nz-input-number>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Giảm giá</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
+            formControlName="discountId">
+            <nz-option *ngFor="let item of loadDiscounts" [nzLabel]="item.code" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Khả năng nâng cấp</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <input nz-input formControlName="upgrade" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label nzRequired>Tên sản phẩm</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn mã giảm giá"
+            formControlName="productEntityId">
+            <nz-option *ngFor="let item of loadProducts" [nzLabel]="item.name" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Ram</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Ram" formControlName="ramEntityId">
+            <nz-option *ngFor="let item of loadRams" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>CPU</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn CPU" formControlName="cpuEntityId">
+            <nz-option *ngFor="let item of loadCpus" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Card VGA</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn Card VGA"
+            formControlName="cardVGAEntityId">
+            <nz-option *ngFor="let item of loadCardVGAs" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Ổ cứng</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn ổ cứng"
+            formControlName="hardDriveEntityId">
+            <nz-option *ngFor="let item of loadHardDrives" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Màn hình</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màn hình"
+            formControlName="screenEntityId">
+            <nz-option *ngFor="let item of loadScreens" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Màu sắc</nz-form-label>
+      <nz-form-item>
+        <nz-form-control>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn màu sắc"
+            formControlName="colorEntityId">
+            <nz-option *ngFor="let item of loadColors" [nzLabel]="item.ma" [nzValue]="item.id">
+            </nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-label>Trạng thái</nz-form-label>
+      <nz-form-item>
+          <nz-select class="w-150 mgl-t-15" nzShowSearch nzAllowClear nzPlaceHolder="Chọn trạng thái" formControlName="status">
+            <nz-option nzLabel="Đang hoạt động" nzValue="1">Đang hoạt động</nz-option>
+            <nz-option nzLabel="Ẩn" nzValue="2">Ẩn</nz-option>
+            <nz-option nzLabel="Ngừng kinh doanh" nzValue="3">Ngừng kinh doanh</nz-option>
+        </nz-select>
+      </nz-form-item>
+    </div>
+
+    <!-- <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <nz-form-label>Upload Images</nz-form-label>
+        <nz-form-control>
+          <nz-upload nzAction="" [(nzFileList)]="fileList" (nzChange)="handleChange($event)"
+            [nzBeforeUpload]="beforeUpload" nzMultiple>
+            <button nz-button>
+              <i nz-icon nzType="upload"></i> Select File
+            </button>
+          </nz-upload>
+        </nz-form-control>
+      </nz-form-item>
+    </div> -->
+  </div>
+
+  <div nz-row nzGutter="24">
+    <div nz-col [nzSpan]="24">
+      <nz-form-label>Mô tả</nz-form-label>
+      <nz-form-item>
+
+        <nz-form-control>
+          <ckeditor style="min-height: 300px;" [editor]="Editor" formControlName="description"></ckeditor>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="24">
+    <div nz-col [nzSpan]="20"></div>
+    <div nz-col [nzSpan]="2">
+      <nz-form-item>
+        <nz-form-control>
+          <button type="button" nz-button nzType="default" (click)="back()">Quay lại</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="2">
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" [disabled]="!productDetailForm.valid"><i nz-icon
+              nzType="save"></i>Lưu</button>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

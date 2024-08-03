@@ -29,7 +29,7 @@ namespace PTS.Persistence.Extensions
 				   builder =>
 				   {
 					   builder.MigrationsAssembly("PTS.Persistence");
-				   }));
+				   }), ServiceLifetime.Scoped);
 			services.AddIdentity<UserEntity, RoleEntity>(options =>
 			{
 				options.Password.RequireDigit = true;
@@ -68,6 +68,7 @@ namespace PTS.Persistence.Extensions
 			services.AddTransient<ICartService, CartService>();
 			services.AddTransient<IBillService, BillService>();
 			services.AddScoped<IUnitOfWork, UnitOfWork>();
-		}
+           services.AddScoped<IVnPayService, VnPayService>();
+        }
 	}
 }

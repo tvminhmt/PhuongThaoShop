@@ -110,6 +110,11 @@ namespace PTS.Persistence.Migrations
                         {
                             UserId = 1,
                             RoleId = 1
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            RoleId = 3
                         });
                 });
 
@@ -130,6 +135,36 @@ namespace PTS.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.AddressEntity", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
+
+                    b.Property<string>("AddressName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CrDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CrUserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserEntityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("UserEntityId");
+
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.BillDetailEntity", b =>
@@ -163,6 +198,12 @@ namespace PTS.Persistence.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -213,6 +254,12 @@ namespace PTS.Persistence.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdUserId")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserEntityId")
@@ -421,6 +468,26 @@ namespace PTS.Persistence.Migrations
                     b.ToTable("CPU");
                 });
 
+            modelBuilder.Entity("PTS.Domain.Entities.DiscountEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Percentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Discount");
+                });
+
             modelBuilder.Entity("PTS.Domain.Entities.HardDriveEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -465,18 +532,19 @@ namespace PTS.Persistence.Migrations
                     b.Property<int?>("CrUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("LinkImage")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("Ma")
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductDetailEntityId")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -572,26 +640,11 @@ namespace PTS.Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HardDriveEntityId")
+                    b.Property<int?>("DiscountId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Image1")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image2")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image3")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image4")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image5")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Image6")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("HardDriveEntityId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("OldPrice")
                         .HasColumnType("decimal(18,2)");
@@ -611,6 +664,12 @@ namespace PTS.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdUserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Upgrade")
                         .HasColumnType("nvarchar(max)");
 
@@ -622,6 +681,8 @@ namespace PTS.Persistence.Migrations
 
                     b.HasIndex("CpuEntityId");
 
+                    b.HasIndex("DiscountId");
+
                     b.HasIndex("HardDriveEntityId");
 
                     b.HasIndex("ProductEntityId");
@@ -631,6 +692,35 @@ namespace PTS.Persistence.Migrations
                     b.HasIndex("ScreenEntityId");
 
                     b.ToTable("ProductDetail");
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.ProductDetailImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsIndex")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductDetailId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("ProductDetailId");
+
+                    b.ToTable("ProductDetailImage");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.ProductEntity", b =>
@@ -765,7 +855,7 @@ namespace PTS.Persistence.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "1",
+                            ConcurrencyStamp = "phuongthaoshop.vn",
                             Description = "Administrator",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
@@ -773,7 +863,7 @@ namespace PTS.Persistence.Migrations
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "1",
+                            ConcurrencyStamp = "phuongthaoshop.vn",
                             Description = "Employee",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
@@ -781,7 +871,7 @@ namespace PTS.Persistence.Migrations
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "1",
+                            ConcurrencyStamp = "phuongthaoshop.vn",
                             Description = "Customer",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
@@ -826,57 +916,6 @@ namespace PTS.Persistence.Migrations
                     b.ToTable("Screen");
                 });
 
-            modelBuilder.Entity("PTS.Domain.Entities.SeoEntity", b =>
-                {
-                    b.Property<int>("SeoId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeoId"));
-
-                    b.Property<string>("CanonicalTag")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CrDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CrUserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("H1Tag")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetaDesc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetaKeyword")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("MetaTitle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SeoFooter")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SeoName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SeoId");
-
-                    b.ToTable("SeoEntity");
-                });
-
             modelBuilder.Entity("PTS.Domain.Entities.SerialEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -904,9 +943,17 @@ namespace PTS.Persistence.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("UpdDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdUserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("BillDetailEntityId");
+                    b.HasIndex("BillDetailEntityId")
+                        .IsUnique()
+                        .HasFilter("[BillDetailEntityId] IS NOT NULL");
 
                     b.HasIndex("ProductDetailEntityId");
 
@@ -924,14 +971,8 @@ namespace PTS.Persistence.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("AvatarPath")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("BirthDay")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -939,9 +980,6 @@ namespace PTS.Persistence.Migrations
 
                     b.Property<DateTime?>("CrDateTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<int?>("DefaultActionId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -988,9 +1026,6 @@ namespace PTS.Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("RoleEntitiesId")
-                        .HasColumnType("int");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -1014,8 +1049,6 @@ namespace PTS.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("RoleEntitiesId");
-
                     b.ToTable("Users", (string)null);
 
                     b.HasData(
@@ -1024,17 +1057,34 @@ namespace PTS.Persistence.Migrations
                             Id = 1,
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "phuongthaoshop.vn",
-                            Email = "admin@phuongthaoshop.vn",
+                            Email = "adphuongthao@gmail.com",
                             EmailConfirmed = false,
-                            FullName = "Administrator",
+                            FullName = "Nguyễn Phương Thảo",
                             LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@PHUONGTHAOSHOP.VN",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOMsjFecv9A9qyXLxhMZRqKjQ7z3bDfsqQZ5itJYNDr7qLjTcp+8SCQZXdB4t3wOJA==",
+                            NormalizedEmail = "ADPHUONGTHAO@GMAIL.COM",
+                            NormalizedUserName = "ADPHUONGTHAO",
+                            PasswordHash = "AQAAAAIAAYagAAAAEERQ5zhByb7xZMDVKaUFJyA4tG2mPyAfI4qumrpxq9HQUA0hi1Lqq0Z5VHIn+Snh5A==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "phuongthaoshop.vn",
                             TwoFactorEnabled = false,
-                            UserName = "admin"
+                            UserName = "adphuongthao"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "phuongthaoshop.vn",
+                            Email = "thuhuyen@gmail.com",
+                            EmailConfirmed = false,
+                            FullName = "Vũ Thị Huyền",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "THUHUYEN@GMAIL.COM",
+                            NormalizedUserName = "THUHUYEN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAsRvIOt7/n/cu9jrjdu+J3p65VkYt3/Rd32McBFRq7CndQLFNEbv4s/66UZYXHP+w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "phuongthaoshop.vn",
+                            TwoFactorEnabled = false,
+                            UserName = "thuhuyen"
                         });
                 });
 
@@ -1132,6 +1182,15 @@ namespace PTS.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PTS.Domain.Entities.AddressEntity", b =>
+                {
+                    b.HasOne("PTS.Domain.Entities.UserEntity", "UserEntity")
+                        .WithMany("AddressEntities")
+                        .HasForeignKey("UserEntityId");
+
+                    b.Navigation("UserEntity");
+                });
+
             modelBuilder.Entity("PTS.Domain.Entities.BillDetailEntity", b =>
                 {
                     b.HasOne("PTS.Domain.Entities.BillEntity", "BillEntity")
@@ -1202,6 +1261,10 @@ namespace PTS.Persistence.Migrations
                         .WithMany()
                         .HasForeignKey("CpuEntityId");
 
+                    b.HasOne("PTS.Domain.Entities.DiscountEntity", "Discount")
+                        .WithMany("ProductDetailEntities")
+                        .HasForeignKey("DiscountId");
+
                     b.HasOne("PTS.Domain.Entities.HardDriveEntity", "HardDriveEntity")
                         .WithMany()
                         .HasForeignKey("HardDriveEntityId");
@@ -1213,7 +1276,7 @@ namespace PTS.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("PTS.Domain.Entities.RamEntity", "RamEntity")
-                        .WithMany()
+                        .WithMany("ProductDetailEntities")
                         .HasForeignKey("RamEntityId");
 
                     b.HasOne("PTS.Domain.Entities.ScreenEntity", "ScreenEntity")
@@ -1226,6 +1289,8 @@ namespace PTS.Persistence.Migrations
 
                     b.Navigation("CpuEntity");
 
+                    b.Navigation("Discount");
+
                     b.Navigation("HardDriveEntity");
 
                     b.Navigation("ProductEntity");
@@ -1233,6 +1298,25 @@ namespace PTS.Persistence.Migrations
                     b.Navigation("RamEntity");
 
                     b.Navigation("ScreenEntity");
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.ProductDetailImage", b =>
+                {
+                    b.HasOne("PTS.Domain.Entities.ImageEntity", "Image")
+                        .WithMany("ProductDetailImages")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PTS.Domain.Entities.ProductDetailEntity", "ProductDetail")
+                        .WithMany()
+                        .HasForeignKey("ProductDetailId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Image");
+
+                    b.Navigation("ProductDetail");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.ProductEntity", b =>
@@ -1252,31 +1336,22 @@ namespace PTS.Persistence.Migrations
 
             modelBuilder.Entity("PTS.Domain.Entities.SerialEntity", b =>
                 {
-                    b.HasOne("PTS.Domain.Entities.BillDetailEntity", "BillDetailEntities")
-                        .WithMany("SerialEntities")
-                        .HasForeignKey("BillDetailEntityId");
+                    b.HasOne("PTS.Domain.Entities.BillDetailEntity", "BillDetailEntity")
+                        .WithOne("SerialEntity")
+                        .HasForeignKey("PTS.Domain.Entities.SerialEntity", "BillDetailEntityId");
 
                     b.HasOne("PTS.Domain.Entities.ProductDetailEntity", "ProductDetailEntities")
                         .WithMany("SerialEntities")
                         .HasForeignKey("ProductDetailEntityId");
 
-                    b.Navigation("BillDetailEntities");
+                    b.Navigation("BillDetailEntity");
 
                     b.Navigation("ProductDetailEntities");
                 });
 
-            modelBuilder.Entity("PTS.Domain.Entities.UserEntity", b =>
-                {
-                    b.HasOne("PTS.Domain.Entities.RoleEntity", "RoleEntities")
-                        .WithMany()
-                        .HasForeignKey("RoleEntitiesId");
-
-                    b.Navigation("RoleEntities");
-                });
-
             modelBuilder.Entity("PTS.Domain.Entities.BillDetailEntity", b =>
                 {
-                    b.Navigation("SerialEntities");
+                    b.Navigation("SerialEntity");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.BillEntity", b =>
@@ -1294,6 +1369,16 @@ namespace PTS.Persistence.Migrations
                     b.Navigation("CartDetailEntities");
                 });
 
+            modelBuilder.Entity("PTS.Domain.Entities.DiscountEntity", b =>
+                {
+                    b.Navigation("ProductDetailEntities");
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.ImageEntity", b =>
+                {
+                    b.Navigation("ProductDetailImages");
+                });
+
             modelBuilder.Entity("PTS.Domain.Entities.ProductDetailEntity", b =>
                 {
                     b.Navigation("CartDetailEntities");
@@ -1306,6 +1391,11 @@ namespace PTS.Persistence.Migrations
                     b.Navigation("ProductDetailEntities");
                 });
 
+            modelBuilder.Entity("PTS.Domain.Entities.RamEntity", b =>
+                {
+                    b.Navigation("ProductDetailEntities");
+                });
+
             modelBuilder.Entity("PTS.Domain.Entities.ScreenEntity", b =>
                 {
                     b.Navigation("ProductDetailEntities");
@@ -1313,6 +1403,8 @@ namespace PTS.Persistence.Migrations
 
             modelBuilder.Entity("PTS.Domain.Entities.UserEntity", b =>
                 {
+                    b.Navigation("AddressEntities");
+
                     b.Navigation("Cart");
                 });
 #pragma warning restore 612, 618

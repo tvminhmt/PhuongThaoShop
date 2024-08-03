@@ -14,12 +14,6 @@ namespace PTS.Domain.Entities
         public string Code { get; set; }
         public Decimal Price { get; set; }
         public Decimal OldPrice { get; set; }
-		public string? Image1 { get; set; }
-		public string? Image2 { get; set; }
-		public string? Image3 { get; set; }
-		public string? Image4 { get; set; }
-		public string? Image5 { get; set; }
-		public string? Image6 { get; set; }
 		public string? Upgrade { get; set; }
         public string? Description { get; set; }
         public int ProductEntityId { get; set; }
@@ -30,8 +24,11 @@ namespace PTS.Domain.Entities
         public int? ScreenEntityId { get; set; }
         public int? CardVGAEntityId { get; set; }
 		public int? CrUserId { get; set; }
-		public DateTime? CrDateTime { get; set; }
-		public int Status { get; set; }
+        public int? DiscountId { get; set; }
+        public DateTime? CrDateTime { get; set; }
+        public int? UpdUserId { get; set; }
+        public DateTime? UpdDateTime { get; set; }
+        public int Status { get; set; }
        
 		public virtual ColorEntity? ColorEntity { get; set; }
        
@@ -46,7 +43,8 @@ namespace PTS.Domain.Entities
         public virtual HardDriveEntity? HardDriveEntity { get; set; }
        
         public virtual ProductEntity? ProductEntity { get; set; }
-       
+        public virtual DiscountEntity? Discount { get; set; }
+
         public ICollection<CartDetailEntity>? CartDetailEntities { get; set; }
        
         public ICollection<SerialEntity>? SerialEntities { get; set; }

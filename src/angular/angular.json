@@ -38,7 +38,9 @@
               "src/theme.less",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+          
+            ]
           },
           "configurations": {
             "production": {
@@ -101,10 +103,15 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+ 
+            ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "83e4b607-bcc8-45bf-b4d4-6bdabce8bca2"
   }
 }
