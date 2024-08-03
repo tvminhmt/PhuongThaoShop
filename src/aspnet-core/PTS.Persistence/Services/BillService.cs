@@ -101,7 +101,7 @@ namespace PTS.Persistence.Services
                             Id = 0,
                             Code = bill.InvoiceCode + StringUtility.RandomString(7),
                             CodeProductDetail = item.MaProductDetail,
-                            Price = item.Price,
+                            Price = item.NewPrice,
                             Quantity = item.Quantity,
                             BillEntityId = bill.Id
                         };

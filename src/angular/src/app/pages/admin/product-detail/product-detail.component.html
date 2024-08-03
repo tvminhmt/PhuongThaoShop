@@ -13,10 +13,11 @@
     <tr>
       <th nzWidth="1%">STT</th>
       <th nzWidth="10%">Mã CTSP</th>
+      <th nzWidth="10%">Tên sản phẩm</th>
       <th nzWidth="10%">Hình ảnh</th>
-      <th nzWidth="10%">Địa chỉ</th>
-      <th nzWidth="10%">Số điện thoại</th>
-      <th nzWidth="15%">Phương thức thanh toán</th>
+      <th nzWidth="10%">Giá bán</th>
+      <th nzWidth="10%">Giảm giá</th>
+      <th nzWidth="15%">Khả năng nâng cấp</th>
       <th nzWidth="10%">Tình trạng thanh toán</th>
       <th nzWidth="10%">Trạng thái</th>
       <th nzWidth="5%">Hành động</th>
@@ -26,10 +27,11 @@
     <tr *ngFor="let item of basicTable.data">
       <td>{{ item.stt}}</td>
       <td>{{ item.code}}</td>
+      <td>{{ item.nameProduct}}</td>
       <td>  <img style="width: 80%; height: 80%;" nz-image nzSrc="https://localhost:44302{{ item.imageMain }}" alt=""></td>
       <td>{{ item.price }}</td>
-      <td>{{ item.upgrade }}</td>
-      <td>{{ item.maRam}}</td>
+      <td>{{ item.discount }}</td>
+      <td>{{ item.upgrade}}</td>
       <td>{{ item.maCpu}}</td>
       <td>{{ item.status}}</td>
       <td>

@@ -16,6 +16,7 @@ namespace PTS.Application.Features.ProductDetail.DTOs
         [MaxLength(50)]
         public string Code { get; set; }
         public decimal Price { get; set; }
+        public decimal NewPrice { get; set; }
         public decimal OldPrice { get; set; }
         public string ImageMain { get; set; }
         public int IdImage { get; set; }

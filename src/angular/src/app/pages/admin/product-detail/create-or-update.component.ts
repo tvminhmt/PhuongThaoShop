@@ -9,6 +9,7 @@ import {
   RamDto, CpuDto, CardVGADto, HardDriveDto, ScreenDto, ColorDto,
   ProductDto, DiscountDto
 } from '../../../shared/models/model';
+import { Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'app-create-or-update',
@@ -34,7 +35,8 @@ export class CreateOrUpdateProductDetailComponent implements OnInit {
     private fb: FormBuilder,
     private message: NzMessageService,
     private http: HttpClient,
-    private nzMessageService: NzMessageService
+    private nzMessageService: NzMessageService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -44,6 +46,7 @@ export class CreateOrUpdateProductDetailComponent implements OnInit {
       id: [0],
       code: [null, [Validators.required, Validators.maxLength(50)]],
       price: [null, [Validators.required]],
+      status: [1, [Validators.required]],
       //  oldPrice: [null, [Validators.required]],
       upgrade: [null],
       ramEntityId: [null],
@@ -102,6 +105,9 @@ export class CreateOrUpdateProductDetailComponent implements OnInit {
       this.message.error(`${info.file.name} file upload failed`);
     }
   }
+  back(): void {
+    this.router.navigate(['/product-detail']);
+  }
   delete(id: number): void {
     // this.adminService.deleteBill(id).subscribe(
     //   (response: any) => {
@@ -121,23 +127,23 @@ export class CreateOrUpdateProductDetailComponent implements OnInit {
   onSubmit(): void {
     if (this.productDetailForm.valid) {
       const obj = this.productDetailForm.value;
-      this.adminService.createOrUpdateProductDetail(obj.id, obj.code, obj.description, obj.price, obj.update, obj.productEntityId,
-        obj.colorEntityId, obj.ramEntityId, obj.cpuEntityId, obj.hardDriveEntityId,
+      this.adminService.createOrUpdateProductDetail(obj.id, obj.code, obj.description, obj.price, obj.upgrade, obj.productEntityId,
+        obj.colorEntityId, obj.ramEntityId, obj.cpuEntityId, obj.hardDriveEntityId, obj.screenEntityId, obj.cardVGAEntityId, obj.discountId,
         obj.status).subscribe(
-        (response: any) => {
-          console.log(response)
-          if (response.succeeded) {
-            this.nzMessageService.success(response.messages);
-            //   this.loadData();
-          } else {
-            this.nzMessageService.error(response.messages);
+          (response: any) => {
+            console.log(response)
+            if (response.succeeded) {
+              this.nzMessageService.success(response.messages);
+              this.router.navigate(['/product-detail']);
+            } else {
+              this.nzMessageService.error(response.messages);
+            }
+          },
+          (error) => {
+            this.nzMessageService.error('Thất bại');
+            console.error('API call failed:', error);
           }
-        },
-        (error) => {
-          this.nzMessageService.error('Thất bại');
-          console.error('API call failed:', error);
-        }
-      );
+        );
     }
     else {
       this.nzMessageService.error('Hãy nhập đầy đủ giá trị');

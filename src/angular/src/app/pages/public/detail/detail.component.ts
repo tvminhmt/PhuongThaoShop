@@ -63,7 +63,7 @@ export class DetailComponent implements OnInit {
         quantity: quantity,
         maProductDetail: this.product.code,
         idProductDetails: Number(this.product.id),
-        price: this.product.price,
+        newPrice: this.product.newPrice,
       };
 
       const existingCartItems = localStorage.getItem('cartItems');

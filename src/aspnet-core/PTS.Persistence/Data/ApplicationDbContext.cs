@@ -40,7 +40,7 @@ namespace PTS.Data
         public virtual DbSet<VoucherEntity> VoucherEntity { get; set; }
 		public virtual DbSet<ManagePostEntity> ManagePostEntity { get; set; }
         public virtual DbSet<ContactEntity> ContactEntity { get; set; }
-        public virtual DbSet<DiscountEntity> DiscountEntityy { get; set; }
+        public virtual DbSet<DiscountEntity> DiscountEntity { get; set; }
         public virtual DbSet<ProductDetailImage> ProductDetailImage { get; set; }
         public virtual DbSet<AddressEntity> AddressEntity { get; set; }
 

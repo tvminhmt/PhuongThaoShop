@@ -64,8 +64,9 @@ namespace PTS.Application.Features.ProductDetail.Queries
 								NameProduct = a.ProductEntity.Name,
 								NameProductType = a.ProductEntity.ProductTypeEntity.Name,
 								NameManufacturer = a.ProductEntity.ManufacturerEntity.Name,
-								PhanTramGiamGia = Convert.ToInt32((((a.OldPrice - a.Price) / a.OldPrice) * 100)),
-								IdImage = pImage != null ? pImage.ImageId : 0,
+                                NewPrice = a.Price - (a.Discount != null ? a.Discount.Percentage : 0),
+                                PhanTramGiamGia = a.Discount != null && a.Price != 0 ? Convert.ToInt32((a.Discount.Percentage / a.Price) * 100) : 0,
+                                IdImage = pImage != null ? pImage.ImageId : 0,
 								ListImage = new List<string>()
 							};
 

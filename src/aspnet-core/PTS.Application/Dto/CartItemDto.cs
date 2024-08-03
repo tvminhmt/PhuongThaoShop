@@ -8,6 +8,7 @@
         public int Quantity { get; set; }
         public string? MaProductDetail { get; set; }
         public decimal Price { get; set; }
+        public decimal NewPrice { get; set; }
         public string? Description { get; set; }
         public string? MaRam { get; set; }
         public string? ThongSoRam { get; set; }

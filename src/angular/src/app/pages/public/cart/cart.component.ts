@@ -92,7 +92,7 @@ export class CartComponent {
   totalPrice(): number {
     let totalPrice = 0;
     this.cartItems.forEach(item => {
-      totalPrice += item.price * item.quantity;
+      totalPrice += item.newPrice * item.quantity;
     });
     return totalPrice;
   }

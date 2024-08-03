@@ -20,6 +20,7 @@ export interface ProductDetailDto {
   code?: string;
   oldPrice: number;
   price: number;
+  newPrice: number;
   availableQuantity: number;
   status: number;
   upgrade?: string;
@@ -52,6 +53,7 @@ export interface ProductDetailGetPageDto {
   code?: string;
   oldPrice: number;
   price: number;
+  discount: number;
   availableQuantity: number;
   status: number;
   upgrade?: string;
@@ -91,7 +93,7 @@ export interface CartItemDto {
   idProductDetails: number;
   quantity: number;
   maProductDetail?: string;
-  price: number;
+  newPrice: number;
   description?: string;
   maRam?: string;
   thongSoRam?: string;

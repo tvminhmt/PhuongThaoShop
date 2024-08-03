@@ -154,18 +154,19 @@ export class AdminService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.apiUrl}Bill/BillCreateOrUpdate`, { id, fullName, phoneNumber, payment, isPayment, status });
+    return this.http.post(`${this.apiUrl}Bill/BillCreateOrUpdate`, { id,address, fullName, phoneNumber, payment, isPayment, status });
   }
-  createOrUpdateProductDetail(id?: number, code?: string,description?: string, price?: number, upgrade?: string, product?: number, 
-    color?: number, ram?: number, cpu?: number, hardDrive?: number, screen?: number, cardVGA?: number, discount?: number, status?: number
+  createOrUpdateProductDetail(id?: number, code?: string,description?: string, price?: number, upgrade?: string, productEntityId?: number, 
+    colorEntityId?: number, ramEntityId?: number, cpuEntityId?: number, hardDriveEntityId?: number, screenEntityId?: number, 
+    cardVGAEntityId?: number, discountId?: number, status?: number
   ): Observable<any> {
     const token = this.accountService.getAccessToken();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.apiUrl}ProductDetail/CreateOrUpdate`, { id,code, description, price, upgrade, product,color,ram,
-      cpu, hardDrive,screen,cardVGA,discount,status
+    return this.http.post(`${this.apiUrl}ProductDetail/CreateOrUpdate`, { id,code, description, price, upgrade, productEntityId,colorEntityId,ramEntityId,
+      cpuEntityId, hardDriveEntityId,screenEntityId, cardVGAEntityId, discountId,status
      });
   }
 

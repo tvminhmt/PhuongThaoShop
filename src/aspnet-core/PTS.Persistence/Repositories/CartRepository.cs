@@ -100,6 +100,8 @@ namespace PTS.Persistence.Repositories
                            from cardVGA in cardVGAGroup.DefaultIfEmpty()
                            join screen in await _context.ScreenEntity.Where(x => x.Id != null).ToListAsync() on productDetail.ScreenEntityId equals screen.Id into screenGroup
                            from screen in screenGroup.DefaultIfEmpty()
+                           join discount in await _context.DiscountEntity.Where(x => x.Id != null).ToListAsync() on productDetail.DiscountId equals discount.Id into discountGroup
+                           from discount in discountGroup.DefaultIfEmpty()
                            select new CartItemDto// Dùng kiểu đối tượng ẩn danh (anonymous type)
                            {
                                Id = y.Id,
@@ -126,7 +128,8 @@ namespace PTS.Persistence.Repositories
                                TanSoManHinh = screen != null ? screen.TanSo : string.Empty,
                                ChatLieuManHinh = screen != null ? screen.ChatLieu : string.Empty,
                                NameProduct = product.Name,
-                               NameManufacturer = manufacturer.Name
+                               NameManufacturer = manufacturer.Name,
+                               NewPrice = productDetail.Price - (discount != null ? discount.Percentage : 0),
                                //  LinkImage = (a.ImageEntities.FirstOrDefault(image => image.Ma == "Anh1") != null) ? a.ImageEntities.FirstOrDefault(image => image.Ma == "Anh1").LinkImage : null,
                                // OtherImages = (a.ImageEntities.Where(image => image.Ma != "Anh1").Select(image => image.LinkImage).ToList()),
                            }

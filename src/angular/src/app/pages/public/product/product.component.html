@@ -75,21 +75,27 @@
                                 <span class="p-price" *ngIf="p.availableQuantity > 0; else lienhe">
                                     <span class="box-text-update2021">
                                         <span class="show-shadow">
-                                            {{p.price| vndFormat}}
+                                            {{p.newPrice| vndFormat}}
                                         </span>
                                     </span>
                                     <span class="p-mprice">
-                                        {{p.oldPrice | vndFormat}}
+                                        {{p.price | vndFormat}}
                                     </span>
                                 </span>
                                 <ng-template #lienhe>
                                     <span>Liên hệ</span>
                                   </ng-template>
                             </div>
-                            <span class="productType">
+                            <span class="p-price" *ngIf="p.phanTramGiamGia > 0; else noGiamGia">
+                               <span class="productType">
                                 <img class="img-fluid" src="../../../../assets/images/sales.png" alt="sale off">
                                 <span class="percent">-{{p.phanTramGiamGia}}%</span>
                             </span>
+                            </span>
+                            <ng-template #noGiamGia>
+                                
+                              </ng-template>
+                           
                         </div>
                     </div>
                 </div>
