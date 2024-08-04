@@ -28,6 +28,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -62,6 +63,7 @@ exports:[
     NzUploadModule,
     NzMessageModule,
     NzResultModule,
+    NzPopoverModule,
     ReactiveFormsModule,
     FormsModule, 
     EditorModule,

@@ -1,102 +1,123 @@
 <button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
-    <i class="fa fa-plus"></i> Thêm mới
-  </button>
-  <nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
-    <thead>
-      <tr>
-        <th nzWidth="1%">STT</th>
-        <th nzWidth="10%">Mã hóa đơn</th>
-        <th nzWidth="10%">Họ tên</th>
-        <th nzWidth="10%">Địa chỉ</th>
-        <th nzWidth="10%">Số điện thoại</th>
-        <th nzWidth="15%">Phương thức thanh toán</th>
-        <th nzWidth="10%">Tình trạng thanh toán</th>
-        <th nzWidth="10%">Trạng thái</th>
-        <th nzWidth="5%">Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of basicTable.data">
-        <td>{{ item.stt}}</td>
-        <td>{{ item.invoiceCode}}</td>
-        <td>{{ item.fullName }}</td>
-        <td>{{ item.address }}</td>
-        <td>{{ item.phoneNumber}}</td>
-        <td>{{ item.strPayment}}</td>
-        <td>{{ item.strIsPayment}}</td>
-        <td>{{ item.strStatus}}</td>
-        <td>
-          <ng-container *ngIf="item.status !== 8">
-            <a (click)="edit(item)" style="margin-right: 10px;">
-              <span class="kt-font-success">
-                <i nz-icon nzType="edit" nzTheme="outline"></i>
-              </span>
-            </a>
-            <a (click)="delete(item.id)">
-              <span class="kt-font-danger">
-                <i nz-icon nzType="delete" nzTheme="outline"></i>
-              </span>
-            </a>
-          </ng-container><br>
-      <a style="background-color: cyan" (click)="openBillDetails(item.id)"><strong>Chi tiết</strong> </a>
-        </td>
-      </tr>
-    </tbody>
-  </nz-table>
-  <nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="close()" (click)="save()" [nzWidth]="'50%'">
-    <nz-layout *nzModalContent>
-      <form nz-form [formGroup]="fbForm" style="background-color:white;">
-        <input nz-input formControlName="id" style="display: none;" />
-        <nz-form-item>
-          <nz-form-label nzFor="fullName" [nzSm]="4" nzRequired>Họ tên</nz-form-label>
-          <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-            <input nz-input formControlName="fullName" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="address" [nzSm]="4" nzRequired>Địa chỉ</nz-form-label>
-          <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-            <input nz-input formControlName="address" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="phoneNumber" [nzSm]="4" nzRequired>Số điện thoại</nz-form-label>
-          <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-            <input nz-input formControlName="phoneNumber" />
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="payment" [nzSm]="4" nzRequired>Phương thức thanh toán</nz-form-label>
-          <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-            <nz-select formControlName="payment" nzPlaceHolder="Phương thức thanh toán">
-              <nz-option [nzValue]="1" nzLabel="Thanh toán tại cửa hàng"></nz-option>
-              <nz-option [nzValue]="2" nzLabel="Thanh toán khi nhận hàng (COD)"></nz-option>
-              <nz-option [nzValue]="3" nzLabel="Thanh toán bằng chuyển khoản ngân hàng"></nz-option>
-              <nz-option [nzValue]="4" nzLabel="Thanh toán qua VNPAY"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-          <nz-form-label nzFor="status" [nzSm]="4" nzRequired>Trạng thái</nz-form-label>
-          <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
-            <nz-select formControlName="status" nzPlaceHolder="Chọn trạng thái">
-              <nz-option [nzValue]="0" nzLabel="Đã xóa"></nz-option>
-              <nz-option [nzValue]="2" nzLabel="Chờ xác nhận"></nz-option>
-              <nz-option [nzValue]="3" nzLabel="Chờ gửi hàng"></nz-option>
-              <nz-option [nzValue]="4" nzLabel="Đang giao hàng"></nz-option>
-              <nz-option [nzValue]="5" nzLabel="Giao hàng thành công"></nz-option>
-              <nz-option [nzValue]="6" nzLabel="Giao hàng thất bại"></nz-option>
-              <nz-option [nzValue]="7" nzLabel="Đã hủy"></nz-option>
-              <nz-option [nzValue]="8" nzLabel="Hoàn thành"></nz-option>
-            </nz-select>
-          </nz-form-control>
-        </nz-form-item>
-      </form>
-    </nz-layout>
-    <div *nzModalFooter>
-      <button type="button" nz-button nzType="default" (click)="close()">Đóng</button>
-      <button type="button" nz-button nzType="primary" (click)="save()"><i nz-icon
-                                                                                                nzType="save"></i>Lưu
-      </button>
+  <i class="fa fa-plus"></i> Thêm mới
+</button>
+<nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
+  <thead>
+    <tr>
+      <th nzWidth="1%">STT</th>
+      <th nzWidth="10%">Mã hóa đơn</th>
+      <th nzWidth="10%">Họ tên</th>
+      <th nzWidth="10%">Số điện thoại</th>
+      <th nzWidth="15%">Phương thức thanh toán</th>
+      <th nzWidth="10%">Thanh toán</th>
+      <th nzWidth="10%">Trạng thái</th>
+      <th nzWidth="13%">Thời gian</th>
+      <th nzWidth="5%">Hành động</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of basicTable.data">
+      <td>{{ item.stt}}</td>
+      <td>{{ item.invoiceCode}}</td>
+      <td>{{ item.fullName }}</td>
+      <td>{{ item.phoneNumber}}</td>
+      <td>{{ item.strPayment}}</td>
+      <td>{{ item.strIsPayment}}</td>
+      <td>{{ item.strStatus}}</td>
+      <td>
+        <span nz-icon nzType="user-add" title="Người tạo" nzTheme="outline">
+        </span>: {{ item.crUserName}}<br>
+        <i nz-icon nzType="clock-circle" title="Thời gian tạo" nzTheme="outline"></i>: {{ item.crDateTime | date: 'dd/MM/yyyy, HH:mm' }}<br>
+        <span nz-icon nzType="user-switch" title="Người sửa" nzTheme="outline"></span>: {{ item.updUserName}} <br>
+        <i nz-icon nzType="history" title="Thời gian sửa" nzTheme="outline"></i>: {{ item.updDateTime | date: 'dd/MM/yyyy, HH:mm' }}
+      </td>
+      <td>
+        <ng-container *ngIf="item.status !== 8">
+          <a (click)="edit(item)" title="Sửa hóa đơn" style="margin-right: 10px;">
+            <span class="kt-font-success">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </span>
+          </a>
+          <a title="Xóa hóa đơn" nz-popconfirm nzPopconfirmTitle="Bạn có muốn xóa hóa đơn này không?" nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="delete(item.id)" (nzOnCancel)="cancel()">
+            <span class="kt-font-danger">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </span>
+          </a>
+        </ng-container><br>
+        <a title="Xem chi tiết" (click)="openBillDetails(item.id)">
+          <span class="kt-font-success">
+            <i nz-icon nzType="eye" nzTheme="outline"></i>
+          </span>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</nz-table>
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{ modalTitle }}" (nzOnCancel)="close()" (click)="save()"
+  [nzWidth]="'50%'">
+  <nz-layout *nzModalContent>
+    <form nz-form [formGroup]="fbForm" style="background-color:white;">
+      <input nz-input formControlName="id" style="display: none;" />
+      <nz-form-item>
+        <nz-form-label nzFor="fullName" [nzSm]="4" nzRequired>Họ tên</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="fullName" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="address" [nzSm]="4" nzRequired>Địa chỉ</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="address" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="phoneNumber" [nzSm]="4" nzRequired>Số điện thoại</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <input nz-input formControlName="phoneNumber" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="payment" [nzSm]="4" nzRequired>Loại thanh toán</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <nz-select formControlName="payment" nzPlaceHolder="Phương thức thanh toán">
+            <nz-option [nzValue]="1" nzLabel="Thanh toán tại cửa hàng"></nz-option>
+            <nz-option [nzValue]="2" nzLabel="Thanh toán khi nhận hàng (COD)"></nz-option>
+            <nz-option [nzValue]="3" nzLabel="Thanh toán bằng chuyển khoản ngân hàng"></nz-option>
+            <nz-option [nzValue]="4" nzLabel="Thanh toán qua VNPAY"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="isPayment" [nzSm]="4" nzRequired>Thanh toán</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <nz-select formControlName="isPayment" nzPlaceHolder="Thanh toán">
+            <nz-option [nzValue]="false" nzLabel="Chưa thanh toán"></nz-option>
+            <nz-option [nzValue]="true" nzLabel="Đã thanh toán"></nz-option>
+
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label nzFor="status" [nzSm]="4" nzRequired>Trạng thái</nz-form-label>
+        <nz-form-control [nzSm]="20" nzErrorTip="Giá trị bắt buộc!">
+          <nz-select formControlName="status" nzPlaceHolder="Chọn trạng thái">
+            <nz-option [nzValue]="0" nzLabel="Đã xóa"></nz-option>
+            <nz-option [nzValue]="2" nzLabel="Chờ xác nhận"></nz-option>
+            <nz-option [nzValue]="3" nzLabel="Chờ gửi hàng"></nz-option>
+            <nz-option [nzValue]="4" nzLabel="Đang giao hàng"></nz-option>
+            <nz-option [nzValue]="5" nzLabel="Giao hàng thành công"></nz-option>
+            <nz-option [nzValue]="6" nzLabel="Giao hàng thất bại"></nz-option>
+            <nz-option [nzValue]="7" nzLabel="Đã hủy"></nz-option>
+            <nz-option [nzValue]="8" nzLabel="Hoàn thành"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </nz-layout>
+  <div *nzModalFooter>
+    <button type="button" nz-button nzType="default" (click)="close()">Đóng</button>
+    <button type="button" nz-button nzType="primary" (click)="save()"><i nz-icon nzType="save"></i>Lưu
+    </button>
   </div>
-  </nz-modal>
+</nz-modal>

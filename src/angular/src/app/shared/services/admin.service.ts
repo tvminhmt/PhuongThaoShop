@@ -88,7 +88,9 @@ export class AdminService {
     });
     return this.http.post(`${this.apiUrl}Ram/Delete?id=${id}`, null, { headers: headers });
   }
-
+  getListProductDetail(): Observable<any> {
+    return this.http.get(`${this.apiUrl}ProductDetail/GetList`);
+  }
   getListProduct(): Observable<any> {
     return this.http.get(`${this.apiUrl}Product/GetList`);
   }
@@ -111,7 +113,9 @@ export class AdminService {
   getListColor(): Observable<any> {
     return this.http.get(`${this.apiUrl}Color/GetList`);
   }
-
+  getListSerial(): Observable<any> {
+    return this.http.get(`${this.apiUrl}Serial/GetAll`);
+  }
 
   deleteBill(id: number): Observable<any> {
     const token = this.accountService.getAccessToken();
@@ -119,7 +123,15 @@ export class AdminService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.apiUrl}Bill/Delete?id=${id}`, null, { headers: headers });
+    return this.http.post(`${this.apiUrl}Bill/Delete`, { id }, { headers: headers });
+  }
+  getBillById(id: number): Observable<any> {
+    const token = this.accountService.getAccessToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(`${this.apiUrl}Bill/GetById`, { id }, { headers: headers });
   }
   // role
   getListRole(): Observable<any> {
@@ -150,14 +162,30 @@ export class AdminService {
   }
   createOrUpdateBill(id?: number, fullName?: string, address?: string, phoneNumber?: string, payment?: number, isPayment?: number, status?: number): Observable<any> {
     const token = this.accountService.getAccessToken();
+    const crUserId = this.accountService.getUserId();
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.apiUrl}Bill/BillCreateOrUpdate`, { id,address, fullName, phoneNumber, payment, isPayment, status });
+    return this.http.post(`${this.apiUrl}Bill/BillCreateOrUpdate`, { id, address, fullName, phoneNumber, payment, isPayment, status, crUserId });
   }
-  createOrUpdateProductDetail(id?: number, code?: string,description?: string, price?: number, upgrade?: string, productEntityId?: number, 
-    colorEntityId?: number, ramEntityId?: number, cpuEntityId?: number, hardDriveEntityId?: number, screenEntityId?: number, 
+  createOrUpdateBillDetail(id?: number, billEntityId?: number, codeProductDetail?: string, quantity?: number
+  ): Observable<any> {
+
+    return this.http.post<any>(`${this.apiUrl}BillDetail/CreateOrUpdate`, {
+      id, billEntityId, codeProductDetail, quantity
+    });
+  }
+  deleteBillDetail(id: number): Observable<any> {
+    const token = this.accountService.getAccessToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(`${this.apiUrl}BillDetail/Delete`, { id }, { headers: headers });
+  }
+  createOrUpdateProductDetail(id?: number, code?: string, description?: string, price?: number, upgrade?: string, productEntityId?: number,
+    colorEntityId?: number, ramEntityId?: number, cpuEntityId?: number, hardDriveEntityId?: number, screenEntityId?: number,
     cardVGAEntityId?: number, discountId?: number, status?: number
   ): Observable<any> {
     const token = this.accountService.getAccessToken();
@@ -165,11 +193,25 @@ export class AdminService {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.post(`${this.apiUrl}ProductDetail/CreateOrUpdate`, { id,code, description, price, upgrade, productEntityId,colorEntityId,ramEntityId,
-      cpuEntityId, hardDriveEntityId,screenEntityId, cardVGAEntityId, discountId,status
-     });
+    return this.http.post(`${this.apiUrl}ProductDetail/CreateOrUpdate`, {
+      id, code, description, price, upgrade, productEntityId, colorEntityId, ramEntityId,
+      cpuEntityId, hardDriveEntityId, screenEntityId, cardVGAEntityId, discountId, status
+    });
   }
+  deleteProductDetail(id: number): Observable<any> {
+    const token = this.accountService.getAccessToken();
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(`${this.apiUrl}ProductDetail/Delete`, { id }, { headers: headers });
+  }
+  updateSerial(id?: number, billDetailEntityId?: number): Observable<any> {
 
+    return this.http.post<any>(`${this.apiUrl}Serial/Update`, {
+      id,billDetailEntityId
+    });
+  }
   deleteRole(id: number): Observable<any> {
     const token = this.accountService.getAccessToken();
     const headers = new HttpHeaders({

@@ -6,7 +6,25 @@
     <div *ngIf="product" class="card-body">
         <div class="row">
             <div class="col-lg-6 mb-4 mb-lg-0">
-
+                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                      <button *ngFor="let image of images; let i = index" type="button" data-bs-target="#carouselExampleIndicators" [attr.data-bs-slide-to]="i" [class.active]="i === 0" aria-current="true" [attr.aria-label]="'Slide ' + (i + 1)"></button>
+                    </div>
+                    <div class="carousel-inner">
+                      <div *ngFor="let image of images; let i = index" class="carousel-item" [class.active]="i === 0">
+                        <img [src]="'https://localhost:44302/' + image" class="d-block " alt="...">
+                      </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="visually-hidden">Next</span>
+                    </button>
+                  </div>
+                  
             </div>
             <div class="col-lg-6">
                 <h5> {{ product.nameProduct }} {{ product.code }} ( {{ product.tenCpu }}, {{

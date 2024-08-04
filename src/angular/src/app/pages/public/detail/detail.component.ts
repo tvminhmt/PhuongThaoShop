@@ -19,6 +19,7 @@ export class DetailComponent implements OnInit {
   productId!: string;
   userName!: string;
   private cartItems: CartItemDto[] = [];
+  images: string[] = [];
   constructor(private route: ActivatedRoute, private publicService: PublicService, private router: Router,
  private accountService: AccountService,private location: Location, private vndFormatPipe: VndFormatPipe) { }
 
@@ -32,6 +33,7 @@ export class DetailComponent implements OnInit {
       this.publicService.getProductById(this.productId).subscribe(
         (data: any) => {
           this.product = data.data;
+          this.images =  this.product.listImage;
           console.log(this.product)
         },
         (error) => {
@@ -87,18 +89,18 @@ export class DetailComponent implements OnInit {
     }
   }
 
-  images: string[] = [
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
-    'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg'
-  ];
+  // images: string[] = [
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg',
+  //   'https://laptopaz.vn/media/product/3013_slim_5_2023.jpg'
+  // ];
 
-  selectedImage: string = this.images[0];
+  // selectedImage: string = this.images[0];
 
-  onSelectImage(image: string): void {
-    this.selectedImage = image;
-  }
+  // onSelectImage(image: string): void {
+  //   this.selectedImage = image;
+  // }
 }

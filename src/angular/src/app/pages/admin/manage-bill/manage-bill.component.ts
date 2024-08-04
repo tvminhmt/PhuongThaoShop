@@ -28,13 +28,14 @@ export class ManageBillComponent implements OnInit {
       address: ['', [Validators.required]],
       phoneNumber: ['', [Validators.required]],
       payment: [null, [Validators.required]],
+      isPayment: [false, [Validators.required]],
       status: [null, [Validators.required]],
     });
     this.loadData();
   }
 
   loadData(): void {
-    this.adminService.getPageBill(1,40,'').subscribe(response => {
+    this.adminService.getPageBill(1,9999,'').subscribe(response => {
       console.log(response.data)
       this.listData = response.data;
     });
@@ -77,6 +78,9 @@ export class ManageBillComponent implements OnInit {
 
   close(): void {
     this.isVisible = false;
+  }
+  cancel(): void {
+    this.nzMessageService.info('Bạn đã hủy thao tác');
   }
   edit(item: BillGetPageDto): void {
     this.modalTitle = 'Sửa Hóa Đơn';

@@ -124,12 +124,12 @@
       </nz-form-item>
     </div>
     <div nz-col [nzSpan]="6">
-      <nz-form-label>Trạng thái</nz-form-label>
+      <nz-form-label nzRequired>Trạng thái</nz-form-label>
       <nz-form-item>
-          <nz-select class="w-150 mgl-t-15" nzShowSearch nzAllowClear nzPlaceHolder="Chọn trạng thái" formControlName="status">
-            <nz-option nzLabel="Đang hoạt động" nzValue="1">Đang hoạt động</nz-option>
-            <nz-option nzLabel="Ẩn" nzValue="2">Ẩn</nz-option>
-            <nz-option nzLabel="Ngừng kinh doanh" nzValue="3">Ngừng kinh doanh</nz-option>
+          <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn trạng thái" formControlName="status">
+            <nz-option nzLabel="Đang hoạt động" [nzValue]="1">Đang hoạt động</nz-option>
+            <nz-option nzLabel="Ẩn" [nzValue]="2">Ẩn</nz-option>
+            <nz-option nzLabel="Ngừng kinh doanh" [nzValue]="3">Ngừng kinh doanh</nz-option>
         </nz-select>
       </nz-form-item>
     </div>

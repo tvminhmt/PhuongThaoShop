@@ -20,7 +20,7 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private fb: FormBuilder,
-    private message: NzMessageService,
+    private nzMessageService: NzMessageService,
     private http: HttpClient,
     private router: Router
   ) { }
@@ -41,19 +41,23 @@ export class ProductDetailComponent implements OnInit {
     this.router.navigate(['/product-detail-create-or-update'], { state: { item } });
   }
   delete(id: number): void {
-    // this.adminService.deleteBill(id).subscribe(
-    //   (response: any) => {
-    //     if (response.isSuccessed) {
-    //       this.nzMessageService.success('Thành công');
-    //       this.loadData();
-    //     } else {
-    //       this.nzMessageService.error('Thất bại');
-    //     }
-    //   },
-    //   (error) => {
-    //     this.nzMessageService.error('Thất bại');
-    //     console.error('API call failed:', error);
-    //   }
-    // );
+    this.adminService.deleteProductDetail(id).subscribe(
+      (response: any) => {
+        console.log(response)
+        if (response.succeeded) {
+          this.nzMessageService.success('Thành công');
+          this.loadData();
+        } else {
+          this.nzMessageService.error('Thất bại');
+        }
+      },
+      (error) => {
+        this.nzMessageService.error('Thất bại');
+        console.error('API call failed:', error);
+      }
+    );
+  }
+  cancel(): void {
+    this.nzMessageService.info('Bạn đã hủy thao tác');
   }
 }

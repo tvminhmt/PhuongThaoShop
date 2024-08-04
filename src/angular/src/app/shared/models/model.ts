@@ -17,7 +17,7 @@ export interface LoginRequestDto {
 }
 export interface ProductDetailDto {
   id: string;
-  code?: string;
+  code: string;
   oldPrice: number;
   price: number;
   newPrice: number;
@@ -44,7 +44,7 @@ export interface ProductDetailDto {
   tenCardVGA?: string;
   thongSoCardVGA?: string;
   imageMain?: string;
-  otherImages?: string[];
+  listImage: string[];
   phanTramGiamGia: number;
 }
 export interface ProductDetailGetPageDto {
@@ -56,6 +56,7 @@ export interface ProductDetailGetPageDto {
   discount: number;
   availableQuantity: number;
   status: number;
+  strStatus?: string;
   upgrade?: string;
   description?: string;
   maRam?: string;
@@ -212,7 +213,8 @@ export interface BillGetPageDto {
   id: number;
   stt: number;
   invoiceCode: string;
-  createDate?: Date;
+  crDateTime?: Date;
+  updDateTime?: Date;
   phoneNumber?: string;
   fullName?: string;
   address?: string;
@@ -227,6 +229,8 @@ export interface BillGetPageDto {
   status: number;
   billDetail?: any;
   count: number;
+  crUserName: string;
+  updUserName: string;
 }
 export interface BillDetail {
   id: number;
@@ -236,6 +240,7 @@ export interface BillDetail {
   price: number;
   billEntityId: number;
   crUserId?: number;
+  status: number;
 }
 export interface RoleDto {
   id: number;
@@ -251,6 +256,18 @@ export interface PBillCreateCommand {
   payment: number;
   cartItem?: CartItemDto[];
 }
+export interface SerialDto {
+  id: number;
+  serialNumber: string;
+  crUserId?: number | null;
+  crDateTime?: Date | null;
+  updUserId?: number | null;
+  updDateTime?: Date | null;
+  status: number;
+  productDetailEntityId?: number | null;
+  billDetailEntityId?: number | null;
+}
+
 // Example: api-result.model.ts
 
 export interface ApiResult<T> {

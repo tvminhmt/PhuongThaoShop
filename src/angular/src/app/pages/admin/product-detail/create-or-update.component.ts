@@ -108,22 +108,7 @@ export class CreateOrUpdateProductDetailComponent implements OnInit {
   back(): void {
     this.router.navigate(['/product-detail']);
   }
-  delete(id: number): void {
-    // this.adminService.deleteBill(id).subscribe(
-    //   (response: any) => {
-    //     if (response.isSuccessed) {
-    //       this.nzMessageService.success('Thành công');
-    //       this.loadData();
-    //     } else {
-    //       this.nzMessageService.error('Thất bại');
-    //     }
-    //   },
-    //   (error) => {
-    //     this.nzMessageService.error('Thất bại');
-    //     console.error('API call failed:', error);
-    //   }
-    // );
-  }
+
   onSubmit(): void {
     if (this.productDetailForm.valid) {
       const obj = this.productDetailForm.value;
