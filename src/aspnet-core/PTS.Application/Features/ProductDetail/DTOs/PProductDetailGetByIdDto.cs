@@ -43,5 +43,6 @@ namespace PTS.Application.Features.ProductDetail.DTOs
 		public List<string>? ListImage { get; set; }
 		public int PhanTramGiamGia { get; set; }
 		public int Status { get; set; }
-	}
+        public string strStatus { get; set; }
+    }
 }

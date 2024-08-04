@@ -6,6 +6,7 @@ using PTS.Application.DTOs;
 using PTS.Application.Extensions;
 using PTS.Application.Features.ProductDetail.DTOs;
 using PTS.Application.Interfaces.Repositories;
+using PTS.Core.Enums;
 using PTS.Domain.Entities;
 using PTS.Shared;
 
@@ -42,8 +43,8 @@ namespace PTS.Application.Features.ProductDetail.Queries
         {
             try
             {
-                var image = _unitOfWork.Repository<ImageEntity>().Entities.AsNoTracking();
-                var query = (from a in _unitOfWork.Repository<ProductDetailEntity>().Entities.AsNoTracking()
+                var image = _unitOfWork.Repository<ImageEntity>().Entities.Where(x => x.Status != (int)StatusEnum.Delete).AsNoTracking();
+                var query = (from a in _unitOfWork.Repository<ProductDetailEntity>().Entities.Where(x => x.Status == 1).AsNoTracking()
                              join pImage in _unitOfWork.Repository<ProductDetailImage>().Entities.Where(x => x.IsIndex).AsNoTracking()
                                   on a.Id equals pImage.ProductDetailId into pImageGroup
                              from pImage in pImageGroup.DefaultIfEmpty()

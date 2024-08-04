@@ -141,63 +141,6 @@ namespace PTS.Persistence.Services
             }
         }
 
-        //public async Task<ResponseDto> CreateBill(commandBillDto command)
-        //{
-        //	try
-        //	{
-        //		var user = _userRepository.GetAllUsers().Result.Where(x => x.UserName == command.UserName).FirstOrDefault();
-        //		if (!string.IsNullOrEmpty(command.UserName))
-        //		{
-        //			cartItem = await _cartRepository.GetCartItem(command.UserName);
-        //			if (cartItem == null)
-        //			{
-        //				return NotFoundResponse("Không có sản phẩm trong giỏ hàng");
-        //			}
-        //		}
-        //		var listVoucher = await _voucherRepository.GetAll();
-        //		var voucherX = listVoucher.FirstOrDefault(x => x.MaVoucher == command.CodeVoucher);
-        //		var bill = new BillEntity
-        //		{
-        //			Id = 0,
-        //			InvoiceCode = "Bill" + StringUtility.RandomString(7),
-        //			CrDateTime = DateTime.Now,
-        //			Status = 2, // Trạng thái 2: Chờ xác nhận
-        //			FullName = user != null ? user.FullName : command.FullName,
-        //			PhoneNumber = user != null ? user.PhoneNumber : command.Address,
-        //			Address = user != null ? user.Address : command.PhoneNumber,
-        //			UserEntityId = user != null ? user.Id : null,
-        //			Payment = command.Payment,
-        //			IsPayment = false,
-        //			VoucherEntityId = voucherX != null ? voucherX.Id : (int?)null
-        //		};
-        //		if (await _billRepository.Create(bill))
-        //		{
-        //			IEnumerable<CartItemDto> itemsToAdd = command.UserName == null ? command.CartItem : cartItem;
-        //			foreach (var item in itemsToAdd)
-        //			{
-        //				var billDetail = new BillDetailEntity
-        //				{
-        //					Id = 0,
-        //					Code = bill.InvoiceCode + StringUtility.RandomString(7),
-        //					CodeProductDetail = command.UserName == null ? item.MaProductDetail : item.MaProductDetail,
-        //					Price = command.UserName == null ? item.Price : item.Price,
-        //					Quantity = command.UserName == null ? item.Quantity : item.Quantity,
-        //					BillEntityId = bill.Id
-        //				};
-        //				await _billDetailRepository.CreateBillDetail(billDetail);
-        //			}
-        //			return SuccessResponse(bill, $"{bill.InvoiceCode}");
-        //		}
-        //		else
-        //		{
-        //			return ErrorResponse("Đặt hàng thất bại");
-        //		}
-        //	}
-        //	catch (Exception e)
-        //	{
-        //		return ErrorResponse("Có lỗi gì đó: " + e.Message);
-        //	}
-        //}
         public async Task<ResponseDto> PGetBillByInvoiceCode(string invoiceCode)
 		{
 			var billT = await _billRepository.GetBillByInvoiceCode(invoiceCode);

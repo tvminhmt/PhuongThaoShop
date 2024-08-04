@@ -12,6 +12,8 @@ namespace PTS.Application.Features.Bill.DTOs
         public string StrPayment { get; set; }  
         public string StrStatus { get; set; }
         public string StrIsPayment { get; set; }
-        
+        public string CrUserName { get; set; }
+        public string UpdUserName { get; set; }
+
     }
 }

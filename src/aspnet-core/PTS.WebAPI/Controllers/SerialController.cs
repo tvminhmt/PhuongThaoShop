@@ -6,6 +6,8 @@ using PTS.Application.Dto;
 using PTS.Domain.Entities;
 using PTS.Application.Interfaces.Repositories;
 using OfficeOpenXml;
+using PTS.Application.Features.Serial.Commands;
+using PTS.Application.Features.Serial.Queries;
 
 namespace PTS.WebAPI.Controllers
 {
@@ -20,20 +22,36 @@ namespace PTS.WebAPI.Controllers
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [HttpGet("GetList")]
-        public async Task<IActionResult> GetList()
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            return Ok(await _unitOfWork._serialRepository.GetList());
+            return Ok(await Mediator.Send(new SerialGetAllQuery()));
         }
-        [HttpPost("GetPaged")]
-        public async Task<IActionResult> GetPaged(PagedRequestDto request)
+
+        [HttpPost("GetPage")]
+        public async Task<IActionResult> GetPage(SerialGetPageQuery query)
         {
-            return Ok(await _unitOfWork._serialRepository.GetPagedAsync(request));
+            return Ok(await Mediator.Send(query));
         }
-        [HttpGet("GetById")]
-        public async Task<IActionResult> GetById(int id)
+        [HttpPost("GetById")]
+        public async Task<IActionResult> GetById(SerialGetByIdQuery query)
         {
-            return Ok(await _unitOfWork._serialRepository.GetById(id));
+            return Ok(await Mediator.Send(query));
+        }
+        [HttpPost("CreateOrUpdate")]
+        public async Task<IActionResult> CreateOrUpdate(SerialCreateOrUpdateCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(SerialUpdateCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+        [HttpPost("Delete")]
+        public async Task<IActionResult> DeleteSerial(SerialDeleteCommand command)
+        {
+            return Ok(await Mediator.Send(command));
         }
         [HttpPost]
         [Route("upload")]
@@ -80,29 +98,11 @@ namespace PTS.WebAPI.Controllers
             }
             return Ok("Tệp đã được tải lên và xử lý thành công");
         }
-        [HttpPost("CreateOrUpdateAsync")]
-        public async Task<IActionResult> CreateOrUpdateAsync(SerialDto objDto)
-        {
-            var obj = _mapper.Map<SerialEntity>(objDto);
-            if (objDto.Id > 0)
-            {
-                return Ok(await _unitOfWork._serialRepository.Update(obj));
-            }
-            else
-            {
-                return Ok(await _unitOfWork._serialRepository.Create(obj));
-            }
-        }
         [HttpPost("CreateMany")]
         public async Task<IActionResult> CreateMany(List<SerialDto> listObjDto)
         {
             var listObj = _mapper.Map<List<SerialEntity>>(listObjDto);
             return Ok(await _unitOfWork._serialRepository.CreateMany(listObj));
-        }
-        [HttpPost("Delete")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            return Ok(await _unitOfWork._serialRepository.Delete(id));
         }
     }
 }

@@ -17,16 +17,15 @@ namespace PTS.Application.Features.ProductDetail.Commands
         public int Id { get; set; }
         public string Code { get; set; }
         public Decimal Price { get; set; }
-        public Decimal OldPrice { get; set; }
         public string? Upgrade { get; set; }
         public string? Description { get; set; }
-        public int Product { get; set; }
-        public int? Color { get; set; }
-        public int? Ram { get; set; }
-        public int? Cpu { get; set; }
-        public int? HardDrive { get; set; }
-        public int? Screen { get; set; }
-        public int? CardVGA { get; set; }
+        public int ProductEntityId { get; set; }
+        public int? ColorEntityId { get; set; }
+        public int? RamEntityId { get; set; }
+        public int? CpuEntityId { get; set; }
+        public int? HardDriveEntityId { get; set; }
+        public int? ScreenEntityId { get; set; }
+        public int? CardVGAEntityId { get; set; }
         public int? CrUserId { get; set; }
         public int? DiscountId { get; set; }
         public DateTime? CrDateTime { get; set; }

@@ -34,10 +34,10 @@ namespace PTS.WebAPI
             _mapper = mapper;
             _unitOfWork = unitOfWork;
         }
-        [HttpGet("GetListAsync")]
-        public async Task<IActionResult> GetListAsync()
+        [HttpGet("GetList")]
+        public async Task<IActionResult> GetList()
         {
-            return Ok(await _unitOfWork._productDetailRepository.GetListAsync());
+            return Ok(await Mediator.Send(new ProductDetailGetAllQuery()));
         }
         [HttpPost("GetPage")]
         public async Task<IActionResult> GetPage(ProductDetailGetPageQuery query)

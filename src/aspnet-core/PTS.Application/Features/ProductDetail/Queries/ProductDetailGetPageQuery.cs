@@ -6,6 +6,7 @@ using PTS.Application.DTOs;
 using PTS.Application.Extensions;
 using PTS.Application.Features.ProductDetail.DTOs;
 using PTS.Application.Interfaces.Repositories;
+using PTS.Core.Enums;
 using PTS.Domain.Entities;
 using PTS.Shared;
 
@@ -34,7 +35,7 @@ namespace PTS.Application.Features.ProductDetail.Queries
             try
             {
                 var image = _unitOfWork.Repository<ImageEntity>().Entities.AsNoTracking();
-                var query = (from a in _unitOfWork.Repository<ProductDetailEntity>().Entities.AsNoTracking()
+                var query = (from a in _unitOfWork.Repository<ProductDetailEntity>().Entities.Where(x => x.Status != (int)StatusEnum.Delete).AsNoTracking()
                              join pImage in _unitOfWork.Repository<ProductDetailImage>().Entities.Where(x => x.IsIndex).AsNoTracking()
                                   on a.Id equals pImage.ProductDetailId into pImageGroup
                              from pImage in pImageGroup.DefaultIfEmpty()
@@ -89,6 +90,22 @@ namespace PTS.Application.Features.ProductDetail.Queries
                     foreach (var item in result.Data)
                     {
                         item.Stt = index++;
+                        if(item.Status == 1)
+                        {
+                            item.StrStatus = "Đang hoạt động";
+                        }
+                        else if (item.Status == 2)
+                        {
+                            item.StrStatus = "Ẩn";
+                        }
+                        else if (item.Status == 3)
+                        {
+                            item.StrStatus = "Ngừng kinh doanh";
+                        }
+                        else
+                        {
+                            item.StrStatus = "Không xác định";
+                        }
                         item.AvailableQuantity = GetCount(item.Id);
                         if (item.IdImage > 0)
                         {

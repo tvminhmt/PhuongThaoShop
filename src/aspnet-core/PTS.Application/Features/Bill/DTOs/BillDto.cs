@@ -23,7 +23,9 @@ namespace PTS.Application.Features.Bill.DTOs
         public int? VoucherEntityId { get; set; }
         public int? UserEntityId { get; set; }
         public int? CrUserId { get; set; }
+        public int? UpdUserId { get; set; }
         public DateTime? CrDateTime { get; set; }
+        public DateTime? UpdDateTime { get; set; }
         public int Status { get; set; }
     }
 }

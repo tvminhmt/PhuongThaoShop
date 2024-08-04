@@ -37,6 +37,8 @@ namespace PTS.Application.Features.ProductDetail.DTOs
         public string? ThongSoCardVGA { get; set; }
         public int PhanTramGiamGia { get; set; }
         public string? ImageMain { get; set; }
-        public int Stt {  get; set; }   
+        public int Stt {  get; set; }
+        public decimal Discount { get; set; }
+        public string StrStatus { get; set; }
     }
 }

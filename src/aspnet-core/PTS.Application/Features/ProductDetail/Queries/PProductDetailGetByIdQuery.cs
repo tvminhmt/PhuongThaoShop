@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PTS.Application.Features.ProductDetail.DTOs;
 using PTS.Application.Interfaces.Repositories;
+using PTS.Core.Enums;
 using PTS.Domain.Entities;
 using PTS.Shared;
 
@@ -29,7 +30,7 @@ namespace PTS.Application.Features.ProductDetail.Queries
 			{
 				var imageQuery = _unitOfWork.Repository<ImageEntity>().Entities.AsNoTracking();
 				var productQuery = _unitOfWork.Repository<ProductDetailEntity>().Entities
-					.Where(x => x.Id == queryInput.Id)
+					.Where(x => x.Id == queryInput.Id && x.Status != (int)StatusEnum.Delete)
 					.AsNoTracking();
 
 				var query = from a in productQuery
@@ -100,7 +101,6 @@ namespace PTS.Application.Features.ProductDetail.Queries
 			}
 			catch (Exception ex)
 			{
-				// Handle exception (log it, rethrow it, etc.)
 				return await Result<PProductDetailGetByIdDto>.FailureAsync(ex.Message);
 			}
 		}

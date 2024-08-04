@@ -12,6 +12,7 @@ using System.ComponentModel.DataAnnotations;
 using Abp.Domain.Entities;
 using PTS.Core.Enums;
 using PTS.Shared.Utilities;
+using Microsoft.AspNetCore.Identity;
 
 namespace PTS.Application.Features.Bill.Commands
 {
@@ -23,7 +24,7 @@ namespace PTS.Application.Features.Bill.Commands
         public string? FullName { get; set; }
         public string? Address { get; set; }
         public int Payment { get; set; }
-        public int IsPayment { get; set; }
+        public bool IsPayment { get; set; }
         public decimal? Discount { get; set; }
         public int? VoucherEntityId { get; set; }
         public int? UserEntityId { get; set; }
@@ -36,17 +37,20 @@ namespace PTS.Application.Features.Bill.Commands
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public BillCreateOrUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        public BillCreateOrUpdateCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, UserManager<UserEntity> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<Result<int>> Handle(BillCreateOrUpdateCommand command, CancellationToken cancellationToken)
         {
             try
             {
+                var listUser = _userManager.Users.AsNoTracking().ToList();
                 if (command.Id > 0)
                 {
                     // Update
@@ -57,16 +61,23 @@ namespace PTS.Application.Features.Bill.Commands
                     {
                         return await Result<int>.FailureAsync($"Id <b>{command.Id}</b> không tồn tại");
                     }
+                    if (command.Status == (int)BillStatusEnum.Completed && !command.IsPayment)
+                    {
+                        return await Result<int>.FailureAsync($"Hóa đơn chưa thanh toán, không thể hoàn thành ");
+                    }
                     if (existingEntity.Status == (int)BillStatusEnum.Completed)
                     {
                         return await Result<int>.FailureAsync($"Hóa đơn đã hoàn thành không được sửa ");
                     }
                     existingEntity = _mapper.Map(command, existingEntity);
-                    existingEntity.CrDateTime = DateTime.Now; 
+                    existingEntity.UpdDateTime = DateTime.Now; 
+                    existingEntity.UpdUserId = command.CrUserId;
                     await _unitOfWork.Repository<BillEntity>().UpdateFieldsAsync(existingEntity,
                         x => x.FullName,
                         x => x.Address,
                         x => x.PhoneNumber,
+                        x => x.UpdDateTime,
+                        x => x.UpdUserId,
                         x => x.Payment,
                         x => x.IsPayment,
                         x => x.Status);

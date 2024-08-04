@@ -9,6 +9,7 @@ using PTS.Domain.Entities;
 using PTS.Shared;
 using PTS.Application.Features.Bill.DTOs;
 using PTS.Core.Enums;
+using Microsoft.AspNetCore.Identity;
 
 namespace PTS.Application.Features.Bill.Queries
 {
@@ -20,19 +21,22 @@ namespace PTS.Application.Features.Bill.Queries
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        public BillGetPagesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        private readonly UserManager<UserEntity> _userManager;
+        public BillGetPagesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper, UserManager<UserEntity> userManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _userManager = userManager;
         }
         public async Task<PaginatedResult<BillGetPageDto>> Handle(BillGetPageQuery queryInput, CancellationToken cancellationToken)
         {
+           var listUser = _userManager.Users.AsNoTracking().ToList();
             var query = from listObj in _unitOfWork.Repository<BillEntity>().Entities.Where(x =>x.Status != (int)StatusEnum.Delete).AsNoTracking() select listObj;
             if (!string.IsNullOrEmpty(queryInput.Keywords))
             {
                // query = query.Where(x => x.Ma.Contains(queryInput.Keywords) || x.ThongSo.Contains(queryInput.Keywords));
             }
-            query = query.OrderBy(x => x.CrDateTime);
+            query = query.OrderByDescending(x => x.CrDateTime);
             var pQuery = query.ProjectTo<BillGetPageDto>(_mapper.ConfigurationProvider);
             var resultVar = await pQuery.ToPaginatedListAsync(queryInput.Page, queryInput.PageSize, cancellationToken);
             if (resultVar.Data != null && resultVar.Data.Any())
@@ -44,6 +48,22 @@ namespace PTS.Application.Features.Bill.Queries
                     item.Stt = index++;
                     item.StrStatus = GetStringStatus(item.Status);
                     item.StrIsPayment = item.IsPayment ? "Đã thanh toán" : "Chưa thanh toán";
+                    if(item.CrUserId.HasValue)
+                    {
+                        item.CrUserName = listUser.FirstOrDefault(x => x.Id == item.CrUserId).UserName;
+                    }
+                    else
+                    {
+                        item.CrUserName = "---";
+                    }
+                    if (item.UpdUserId.HasValue)
+                    {
+                        item.UpdUserName = listUser.FirstOrDefault(x => x.Id == item.UpdUserId).UserName;
+                    }
+                    else
+                    {
+                        item.UpdUserName = "---";
+                    }
                 }
             }
             return resultVar;
