@@ -40,7 +40,8 @@ export class BillDetailComponent implements OnInit {
       quantity: [0, [Validators.required]],
     });
     this.serialForm = this.fb.group({
-      serialNumber:['',Validators.required]
+    //  serialNumber:['',Validators.required]
+    serialNumber: [[]] 
     });
 
     this.route.paramMap.subscribe(params => {

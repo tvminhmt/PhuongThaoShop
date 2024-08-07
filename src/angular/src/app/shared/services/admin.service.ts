@@ -27,11 +27,12 @@ export class AdminService {
   //   };
   //   return this.http.post<PagedResultDto<any>>(url, body,{ headers: headers });
   // }
-  getPageBill(page: number, pageSize: number, keywords: string): Observable<any> {
+  getPageBill(page: number, pageSize: number, keywords: string,status: number): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}Bill/GetPage`, {
       page,
       pageSize,
-      keywords
+      keywords,
+      status
     });
   }
   getBillDetailsByBillId(billId: number): Observable<any> {

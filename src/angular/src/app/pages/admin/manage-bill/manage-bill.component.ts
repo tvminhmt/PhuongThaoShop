@@ -17,9 +17,20 @@ export class ManageBillComponent implements OnInit {
   modalTitle = 'Thêm Hóa Đơn';
   listData: BillGetPageDto[] = [];
   fbForm!: FormGroup;
-  request: PagedRequest = { skipCount: 0, maxResultCount: 10 };
+  searchKeyword = '';
+  private intervalId: any;
+  totalCount!: number;
+  totalStatus!: number;
+  totalStatus2!: number;
+  totalStatus3!: number;
+  totalStatus4!: number;
+  totalStatus5!: number;
+  totalStatus6!: number;
+  totalStatus7!: number;
+  totalStatus8!: number;
+  status = 0;
   listOfCurrentPageData: readonly BillGetPageDto[] = [];
-  constructor(private adminService: AdminService,private router: Router, private modal: NzModalService, private nzMessageService: NzMessageService, private fb: FormBuilder) { }
+  constructor(private adminService: AdminService, private router: Router, private modal: NzModalService, private nzMessageService: NzMessageService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.fbForm = this.fb.group({
@@ -32,15 +43,39 @@ export class ManageBillComponent implements OnInit {
       status: [null, [Validators.required]],
     });
     this.loadData();
+    this.intervalId = setInterval(() => {
+      this.loadData();
+    }, 300000);
   }
-
+  ngOnDestroy(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
   loadData(): void {
-    this.adminService.getPageBill(1,9999,'').subscribe(response => {
+    this.adminService.getPageBill(1, 99999, this.searchKeyword,this.status).subscribe(response => {
       console.log(response.data)
       this.listData = response.data;
+      this.totalCount = response.totalCount;
+      this.totalStatus = response.totalStatus;
+      this.totalStatus2 = response.totalStatus2;
+      this.totalStatus3 = response.totalStatus3;
+      this.totalStatus4 = response.totalStatus4;
+      this.totalStatus5 = response.totalStatus5;
+      this.totalStatus6 = response.totalStatus6;
+      this.totalStatus7 = response.totalStatus7;
+      this.totalStatus8 = response.totalStatus8;
     });
   }
+  search(): void {
+    this.loadData();  // Reload and filter the data based on the keyword
+  }
+  searchStatus(status:number): void {
+    this.status = status;
+    this.loadData(); 
+  }
   create(): void {
+    this.modalTitle = 'Thêm Hóa Đơn';
     this.fbForm.reset({
       id: '0'
     });
@@ -50,7 +85,7 @@ export class ManageBillComponent implements OnInit {
     if (this.fbForm.valid) {
       const obj = this.fbForm.value;
       this.isSave = true;
-      this.adminService.createOrUpdateBill(obj.id,obj.fullName,obj.address, obj.phoneNumber, obj.payment, obj.isPayment,obj.status).subscribe(
+      this.adminService.createOrUpdateBill(obj.id, obj.fullName, obj.address, obj.phoneNumber, obj.payment, obj.isPayment, obj.status).subscribe(
         (response: any) => {
           console.log(response)
           if (response.succeeded) {
@@ -84,8 +119,6 @@ export class ManageBillComponent implements OnInit {
   }
   edit(item: BillGetPageDto): void {
     this.modalTitle = 'Sửa Hóa Đơn';
-    console.log("Edited item:", item); // Debugging line
-    console.log("Form value after patching:", this.fbForm.value); // Debugging line
     this.fbForm.patchValue(item);
     this.isVisible = true;
   }

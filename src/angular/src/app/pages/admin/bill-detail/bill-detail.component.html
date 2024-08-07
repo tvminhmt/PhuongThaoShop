@@ -85,7 +85,7 @@
         <nz-form-item>
           <nz-form-control>
             <nz-select class="width-200" nzShowSearch nzAllowClear nzPlaceHolder="Chọn số serial"
-              formControlName="serialNumber">
+              formControlName="serialNumber"  nzMode="multiple">
               <nz-option *ngFor="let item of serials" [nzLabel]="item.serialNumber" [nzValue]="item.id">
               </nz-option>
             </nz-select>

@@ -136,4 +136,9 @@ export class PublicService {
 
     return this.http.post<any>(`${this.apiUrl}Public/GetBill`, params);
   }
+  getCountById(id: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}ProductDetail/GetCountById`, {
+    id
+    });
+  }
 }

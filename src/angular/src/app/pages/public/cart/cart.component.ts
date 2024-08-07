@@ -66,7 +66,7 @@ export class CartComponent {
   loadAddress(userId: number): void {
     this.publicService.getAddress(userId).subscribe(response => {
       console.log(response.data)
-     this.address = response.data;
+      this.address = response.data;
     });
   }
   loadCart(): void {
@@ -135,21 +135,41 @@ export class CartComponent {
   quantityChange(idCartDetail: number, event: number): void {
     if (this.userName) {
       this.publicService.updateQuantityCartItem(event, idCartDetail).subscribe(response => {
-        this.loadCart();
-        this.nzMessageService.success('Thay đổi số lượng thành công');
+        console.log(response);
+        if (response.flag) {
+          this.loadCart();
+
+          this.nzMessageService.success('Thay đổi số lượng thành công');
+        }
+        else {
+          this.loadCart();
+          this.nzMessageService.error(response.message);
+        }
+
       }, error => {
         this.nzMessageService.info('Thay đổi số lượng thất bại');
       });
     } else {
+    
       const cartItemsString = localStorage.getItem('cartItems');
       if (cartItemsString) {
         let cartItems: CartItemDto[] = JSON.parse(cartItemsString);
         const index = cartItems.findIndex(item => item.id === idCartDetail);
         if (index !== -1) {
           cartItems[index].quantity = event;
-          localStorage.setItem('cartItems', JSON.stringify(cartItems));
-          this.loadCart();
-          this.nzMessageService.success('Thay đổi số lượng thành công');
+          this.publicService.getCountById(cartItems[index].idProductDetails).subscribe(response => {
+            if(event <= response){
+              localStorage.setItem('cartItems', JSON.stringify(cartItems));
+              this.loadCart();
+              this.nzMessageService.success('Thay đổi số lượng thành công');
+              }
+              else{
+                this.loadCart();
+                this.nzMessageService.error('Bạn chỉ có thể thay đổi tối đa: '+ response + ' sản phẩm');
+              }
+          });
+        
+         
         } else {
           this.nzMessageService.info('Thay đổi số lượng thất bại: Mục không tồn tại trong giỏ hàng');
         }
@@ -205,11 +225,11 @@ export class CartComponent {
                 }
               );
             } else {
-              console.error('API error:', response.message);
+              this.nzMessageService.error(response.message);
             }
           },
           (error) => {
-            console.error('HTTP error:', error);
+            this.nzMessageService.error(error);
           }
         );
       } else {

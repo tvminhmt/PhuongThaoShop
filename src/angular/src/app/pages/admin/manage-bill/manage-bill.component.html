@@ -1,6 +1,54 @@
-<button nz-button nzType="primary" style="margin-bottom: 15px;" (click)="create()">
-  <i class="fa fa-plus"></i> Thêm mới
-</button>
+<div nz-row [nzGutter]="24" style="margin-bottom: 15px;">
+  <div nz-col [nzSpan]="12">
+    <input nz-input placeholder="Tìm kiếm theo từ khóa" [(ngModel)]="searchKeyword" (ngModelChange)="search()" />
+  </div>
+  <div nz-col [nzSpan]="12">
+    <button nz-button nzType="primary" (click)="create()">
+      <i class="fa fa-plus"></i> Thêm mới
+    </button>
+  </div>
+ 
+  <div nz-col [nzSpan]="4" class="mgt-10" >
+    <button nz-button nzType="primary" style="background-color: yellow; color: black;" (click)="searchStatus(2)">
+       Chờ xác nhận: {{totalStatus2}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10" >
+    <button nz-button nzType="primary"style="background-color: yellow; color: black;"(click)="searchStatus(3)">
+       Chờ gửi hàng: {{totalStatus3}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10">
+    <button nz-button nzType="primary"style="background-color: yellow; color: black;"(click)="searchStatus(4)">
+       Đang giao hàng: {{totalStatus4}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10">
+    <button nz-button nzType="primary" style="background-color:limegreen; color: black;"(click)="searchStatus(5)">
+       Giao hàng thành công: {{totalStatus5}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10">
+    <button nz-button nzType="primary"style="background-color: red;color: black;"(click)="searchStatus(6)">
+       Giao hàng thất bại: {{totalStatus6}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10" >
+    <button nz-button nzType="primary"style="background-color: red;color: black;"(click)="searchStatus(7)">
+       Đã hủy: {{totalStatus7}}
+    </button>
+  </div>
+  <div nz-col [nzSpan]="4" class="mgt-10">
+    <button nz-button nzType="primary"style="background-color:limegreen; color: black;"(click)="searchStatus(8)">
+       Hoàn thành: {{totalStatus8}}
+    </button>
+  </div>
+   <div nz-col [nzSpan]="4" class="mgt-10">
+    <button nz-button nzType="primary"(click)="searchStatus(0)">
+      Tất cả: {{totalStatus}} hóa đơn
+    </button>
+  </div>
+</div>
 <nz-table #basicTable [nzData]="listData" nzBordered nzSize="middle">
   <thead>
     <tr>
@@ -27,9 +75,11 @@
       <td>
         <span nz-icon nzType="user-add" title="Người tạo" nzTheme="outline">
         </span>: {{ item.crUserName}}<br>
-        <i nz-icon nzType="clock-circle" title="Thời gian tạo" nzTheme="outline"></i>: {{ item.crDateTime | date: 'dd/MM/yyyy, HH:mm' }}<br>
+        <i nz-icon nzType="clock-circle" title="Thời gian tạo" nzTheme="outline"></i>: {{ item.crDateTime | date:
+        'dd/MM/yyyy, HH:mm' }}<br>
         <span nz-icon nzType="user-switch" title="Người sửa" nzTheme="outline"></span>: {{ item.updUserName}} <br>
-        <i nz-icon nzType="history" title="Thời gian sửa" nzTheme="outline"></i>: {{ item.updDateTime | date: 'dd/MM/yyyy, HH:mm' }}
+        <i nz-icon nzType="history" title="Thời gian sửa" nzTheme="outline"></i>: {{ item.updDateTime | date:
+        'dd/MM/yyyy, HH:mm' }}
       </td>
       <td>
         <ng-container *ngIf="item.status !== 8">
@@ -38,8 +88,8 @@
               <i nz-icon nzType="edit" nzTheme="outline"></i>
             </span>
           </a>
-          <a title="Xóa hóa đơn" nz-popconfirm nzPopconfirmTitle="Bạn có muốn xóa hóa đơn này không?" nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="delete(item.id)" (nzOnCancel)="cancel()">
+          <a title="Xóa hóa đơn" nz-popconfirm nzPopconfirmTitle="Bạn có muốn xóa hóa đơn này không?"
+            nzPopconfirmPlacement="bottom" (nzOnConfirm)="delete(item.id)" (nzOnCancel)="cancel()">
             <span class="kt-font-danger">
               <i nz-icon nzType="delete" nzTheme="outline"></i>
             </span>
