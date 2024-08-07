@@ -68,12 +68,7 @@ namespace PTS.Persistence.Services
                     {
                         cartDetail.Quantity += quantity;
 
-                        if (await _cartDetailRepository.UpdateQuantity(cartDetail))
-                        {
-                            return new ServiceResponse(true, "Cập nhật thành công");
-                        }
-
-                        return new ServiceResponse(false, "Cập nhật thất bại");
+                       return await _cartDetailRepository.UpdateQuantity(cartDetail);
                     }
                     else
                     {

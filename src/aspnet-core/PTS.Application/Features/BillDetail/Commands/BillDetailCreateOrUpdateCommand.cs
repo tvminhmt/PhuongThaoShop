@@ -115,7 +115,7 @@ namespace PTS.Application.Features.BillDetail.Commands
         {
             int getCount = _unitOfWork.Repository<ProductDetailEntity>().Entities.AsNoTracking()
                 .Where(x => x.Status > 0 && x.Id == id)
-                .Join(_unitOfWork.Repository<SerialEntity>().Entities.AsNoTracking(),
+                .Join(_unitOfWork.Repository<SerialEntity>().Entities.AsNoTracking().Where(x => x.BillDetailEntityId == null),
                       a => a.Id,
                       b => b.ProductDetailEntityId,
                       (a, b) => new { a.Id })

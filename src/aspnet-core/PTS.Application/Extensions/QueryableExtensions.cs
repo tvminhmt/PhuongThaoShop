@@ -15,5 +15,14 @@ namespace PTS.Application.Extensions
             List<T> items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
             return PaginatedResult<T>.Create(items, count, pageNumber, pageSize);
         }
+        public static async Task<PaginatedResult2<T>> ToPaginated2ListAsync<T>(this IQueryable<T> source, int pageNumber, int pageSize, CancellationToken cancellationToken) where T : class
+        {
+            pageNumber = pageNumber == 0 ? 1 : pageNumber;
+            pageSize = pageSize == 0 ? 10 : pageSize;
+            int count = await source.CountAsync();
+            pageNumber = pageNumber <= 0 ? 1 : pageNumber;
+            List<T> items = await source.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
+            return PaginatedResult2<T>.Create(items, count, pageNumber, pageSize);
+        }
     }
 }

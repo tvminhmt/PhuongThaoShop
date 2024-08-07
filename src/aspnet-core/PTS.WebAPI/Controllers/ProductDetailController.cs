@@ -45,6 +45,12 @@ namespace PTS.WebAPI
             return Ok(await Mediator.Send(query));
         }
         [AllowAnonymous]
+        [HttpPost("GetCountById")]
+        public async Task<IActionResult> GetCountById(ProductDetailGetCountByIdQuery query)
+        {
+            return Ok(await Mediator.Send(query));
+        }
+        [AllowAnonymous]
         [HttpPost("PublicGetList")]
         public async Task<IActionResult> PublicGetList(GetProductDetailRequest request)
         {

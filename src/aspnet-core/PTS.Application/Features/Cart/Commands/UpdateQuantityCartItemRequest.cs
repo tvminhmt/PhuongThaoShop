@@ -23,11 +23,7 @@ namespace PTS.Application.Features.Cart.Commands
             CartDetailEntity cartDetail = new CartDetailEntity();
             cartDetail.Id = request.IdCartDetail;
             cartDetail.Quantity = request.Quantity;
-            if (await _repo.UpdateQuantity(cartDetail))
-            {
-                return new ServiceResponse(true, "Cập nhật hành công");
-            }
-            return new ServiceResponse(false, "Cập nhật thất bại");
+            return await _repo.UpdateQuantity(cartDetail);
         }
     }
 }

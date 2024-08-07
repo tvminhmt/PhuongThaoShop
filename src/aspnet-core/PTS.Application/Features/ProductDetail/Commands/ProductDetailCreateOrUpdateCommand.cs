@@ -48,6 +48,14 @@ namespace PTS.Application.Features.ProductDetail.Commands
         {
             try
             {
+                if (command.DiscountId > 0)
+                {
+                    var discount = await _unitOfWork.Repository<DiscountEntity>().GetByIdAsync(command.DiscountId);
+                    if (discount != null && command.Price / 2 < discount.Percentage)
+                    {
+                        return await Result<int>.FailureAsync("Sản phẩm không được giảm quá 50% so với giá gốc");
+                    }
+                }
                 if (command.Id > 0)
                 {
                     // Update logic

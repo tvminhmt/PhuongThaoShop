@@ -2,6 +2,7 @@
 using PTS.Domain.Entities;
 using PTS.Data;
 using Microsoft.EntityFrameworkCore;
+using PTS.Application.Dto;
 
 namespace PTS.Persistence.Repositories
 {
@@ -60,24 +61,44 @@ namespace PTS.Persistence.Repositories
             return await _context.CartDetailEntity.FindAsync(id);
         }
 
-        public async Task<bool> UpdateQuantity(CartDetailEntity obj)
+        public async Task<ServiceResponse> UpdateQuantity(CartDetailEntity obj)
         {
             var cartDT = await _context.CartDetailEntity.FindAsync(obj.Id);
             if (cartDT == null)
             {
-                return false;
+                return new ServiceResponse(false, "Cập nhật thất bại");
             }
-            try
+            var sl = GetCount(cartDT.ProductDetailEntityId);
+            if(obj.Quantity <= sl)
+            {
+                try
             {
                 cartDT.Quantity = obj.Quantity;
                 _context.CartDetailEntity.Update(cartDT);
                 await _context.SaveChangesAsync();
-                return true;
+                return new ServiceResponse(true, "Cập nhật hành công");
             }
             catch (Exception)
             {
-                return false;
+                return new ServiceResponse(false, "Cập nhật thất bại");
             }
+            }
+            else
+            {
+                return new ServiceResponse(false, $"Cập nhật thất bại. Bạn chỉ có thể thêm tối đa {sl} sản phẩm");
+            }
+            
+        }
+        private int GetCount(int id)
+        {
+            int getCount = _context.ProductDetailEntity.ToList()
+                .Where(x => x.Status > 0 && x.Id == id)
+                .Join( _context.SerialEntity.Where(x => x.BillDetailEntityId == null),
+                      a => a.Id,
+                      b => b.ProductDetailEntityId,
+                      (a, b) => new { a.Id })
+                .Count();
+            return getCount;
         }
     }
 }
