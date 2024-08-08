@@ -207,10 +207,10 @@ export class AdminService {
     });
     return this.http.post(`${this.apiUrl}ProductDetail/Delete`, { id }, { headers: headers });
   }
-  updateSerial(id?: number, billDetailEntityId?: number): Observable<any> {
+  updateSerial(ids?:[number], billDetailEntityId?: number): Observable<any> {
 
     return this.http.post<any>(`${this.apiUrl}Serial/Update`, {
-      id,billDetailEntityId
+      ids,billDetailEntityId
     });
   }
   deleteRole(id: number): Observable<any> {

@@ -646,9 +646,6 @@ namespace PTS.Persistence.Migrations
                     b.Property<int?>("HardDriveEntityId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("OldPrice")
-                        .HasColumnType("decimal(18,2)");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -951,9 +948,7 @@ namespace PTS.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BillDetailEntityId")
-                        .IsUnique()
-                        .HasFilter("[BillDetailEntityId] IS NOT NULL");
+                    b.HasIndex("BillDetailEntityId");
 
                     b.HasIndex("ProductDetailEntityId");
 
@@ -1063,7 +1058,7 @@ namespace PTS.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADPHUONGTHAO@GMAIL.COM",
                             NormalizedUserName = "ADPHUONGTHAO",
-                            PasswordHash = "AQAAAAIAAYagAAAAEERQ5zhByb7xZMDVKaUFJyA4tG2mPyAfI4qumrpxq9HQUA0hi1Lqq0Z5VHIn+Snh5A==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE9Pfswin5ojA+GIi5Vl78PGfNNGzwrunnkqKzqlMKtZMoHAQjtRowAhz9qemcxeYw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "phuongthaoshop.vn",
                             TwoFactorEnabled = false,
@@ -1080,7 +1075,7 @@ namespace PTS.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "THUHUYEN@GMAIL.COM",
                             NormalizedUserName = "THUHUYEN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAsRvIOt7/n/cu9jrjdu+J3p65VkYt3/Rd32McBFRq7CndQLFNEbv4s/66UZYXHP+w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENDaY5U4pYlMM5LyIGmQRfYhZ1FcgMNuO7iYPkN4NumNjQGQIoeqONpmYaBH7fxXYw==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "phuongthaoshop.vn",
                             TwoFactorEnabled = false,
@@ -1254,7 +1249,7 @@ namespace PTS.Persistence.Migrations
                         .HasForeignKey("CardVGAEntityId");
 
                     b.HasOne("PTS.Domain.Entities.ColorEntity", "ColorEntity")
-                        .WithMany()
+                        .WithMany("ProductDetailEntities")
                         .HasForeignKey("ColorEntityId");
 
                     b.HasOne("PTS.Domain.Entities.CpuEntity", "CpuEntity")
@@ -1337,8 +1332,8 @@ namespace PTS.Persistence.Migrations
             modelBuilder.Entity("PTS.Domain.Entities.SerialEntity", b =>
                 {
                     b.HasOne("PTS.Domain.Entities.BillDetailEntity", "BillDetailEntity")
-                        .WithOne("SerialEntity")
-                        .HasForeignKey("PTS.Domain.Entities.SerialEntity", "BillDetailEntityId");
+                        .WithMany("SerialEntities")
+                        .HasForeignKey("BillDetailEntityId");
 
                     b.HasOne("PTS.Domain.Entities.ProductDetailEntity", "ProductDetailEntities")
                         .WithMany("SerialEntities")
@@ -1351,7 +1346,7 @@ namespace PTS.Persistence.Migrations
 
             modelBuilder.Entity("PTS.Domain.Entities.BillDetailEntity", b =>
                 {
-                    b.Navigation("SerialEntity");
+                    b.Navigation("SerialEntities");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.BillEntity", b =>
@@ -1367,6 +1362,11 @@ namespace PTS.Persistence.Migrations
             modelBuilder.Entity("PTS.Domain.Entities.CartEntity", b =>
                 {
                     b.Navigation("CartDetailEntities");
+                });
+
+            modelBuilder.Entity("PTS.Domain.Entities.ColorEntity", b =>
+                {
+                    b.Navigation("ProductDetailEntities");
                 });
 
             modelBuilder.Entity("PTS.Domain.Entities.DiscountEntity", b =>

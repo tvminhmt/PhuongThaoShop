@@ -63,11 +63,6 @@ namespace PTS.Data
             modelBuilder.Entity<BillEntity>()
                 .Property(e => e.Discount)
                 .HasColumnType("decimal(18,2)");
-
-            modelBuilder.Entity<ProductDetailEntity>()
-                .Property(e => e.OldPrice)
-                .HasColumnType("decimal(18,2)");
-
             modelBuilder.Entity<ProductDetailEntity>()
                 .Property(e => e.Price)
                 .HasColumnType("decimal(18,2)");

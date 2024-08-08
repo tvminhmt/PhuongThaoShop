@@ -76,7 +76,6 @@ namespace PTS.Persistence.Repositories
                              {
                                  Id = a.Id,
                                  Code = a.Code,
-                                 OldPrice = a.OldPrice,
                                  Price = a.Price,
                                  Status = a.Status,
                                  Upgrade = a.Upgrade,
@@ -187,7 +186,6 @@ namespace PTS.Persistence.Repositories
                 {
                     Id = a.Id,
                     Code = a.Code,
-                    OldPrice = a.OldPrice,
                     Price = a.Price,
                     Status = a.Status,
                     Upgrade = a.Upgrade,
@@ -298,7 +296,6 @@ namespace PTS.Persistence.Repositories
             }
             try
             {
-                productDetail.OldPrice = obj.OldPrice;
                 productDetail.Price = obj.Price;
                 productDetail.Upgrade = obj.Upgrade;
                 productDetail.Description = obj.Description;
@@ -341,7 +338,6 @@ namespace PTS.Persistence.Repositories
             {
                   Id = a.Id,
                   Code = a.Code,
-                  OldPrice = a.OldPrice,
                   Price = a.Price,
                   Status = a.Status,
                   Upgrade = a.Upgrade,

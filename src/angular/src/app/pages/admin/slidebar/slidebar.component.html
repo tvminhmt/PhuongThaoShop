@@ -1,121 +1,152 @@
 <nz-layout style="background-color: white;" class="app-layout">
-    <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
-      [nzTrigger]="null">
-      <div class="sidebar-logo">
-        <a href="/" target="_blank">
-          <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-          <h1>Admin PTS</h1>
-        </a>
-      </div>
-      <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-        <li nz-submenu nzOpen nzTitle="Bán Hàng" nzIcon="dashboard">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/voucher'">Bán Hàng Tại Quầy</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/manage-bill'">Quản Lý Đơn Hàng</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Quản Lý Sản Phẩm" nzIcon="form">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/product-detail'">Quản Lý Sản Phẩm Chi Tiết</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/serial'">Quản Lý Số Serial</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/product'">Quản Lý Sản Phẩm</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/sm'">Quản Lý Loại Sản Phẩm</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/ram'">Quản Lý Nhà Sản Xuất</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/color'">Quản Lý Màu Sắc</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/ram'">Quản Lý Ram</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/cpu'">Quản Lý CPU</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/hard-drive'">Quản Lý SSD</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/screen'">Quản Lý Màn Hình</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/cardvga'">Quản Lý CardVGA</a>
-            </li>
-          </ul>
-        </li>
-       
-        <li nz-submenu nzOpen nzTitle="Thống kê dữ liệu" nzIcon="pie-chart">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/report-day'">Dữ liệu theo ngày</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/report-month'">Dữ liệu theo tháng</a>
-            </li>
-            <li nz-menu-item nzMatchRouter>
-              <a [routerLink]="'/report-year'">Dữ liệu theo năm</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Quản Lý Bài Viết" nzIcon="form">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a>Basic Form</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Quản Lý Hình Ảnh" nzIcon="form">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a>Basic Form</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Thống Kê Dữ Liệu" nzIcon="form">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a>Basic Form</a>
-            </li>
-          </ul>
-        </li>
-        <li nz-submenu nzOpen nzTitle="Quản lý hệ thống" nzIcon="setting">
-          <ul>
-            <li nz-menu-item nzMatchRouter>
-              <a>Basic Form</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </nz-sider>
-    <nz-layout>
-      <nz-header>
-        <div class="app-header">
-          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
-          </span>
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="md" [(nzCollapsed)]="isCollapsed"
+    [nzTrigger]="null">
+    <div class="sidebar-logo">
+      <a href="/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>Admin PTS</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="Bán Hàng" nzIcon="dashboard">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/voucher'">Bán Hàng Tại Quầy</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/manage-bill'">Quản Lý Đơn Hàng</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Quản Lý Sản Phẩm" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/product-detail'">Quản Lý Sản Phẩm Chi Tiết</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/serial'">Quản Lý Số Serial</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/product'">Quản Lý Sản Phẩm</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/sm'">Quản Lý Loại Sản Phẩm</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/ram'">Quản Lý Nhà Sản Xuất</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/color'">Quản Lý Màu Sắc</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/ram'">Quản Lý Ram</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/cpu'">Quản Lý CPU</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/hard-drive'">Quản Lý SSD</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/screen'">Quản Lý Màn Hình</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/cardvga'">Quản Lý CardVGA</a>
+          </li>
+        </ul>
+      </li>
+
+      <li nz-submenu nzOpen nzTitle="Thống kê dữ liệu" nzIcon="pie-chart">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/report-day'">Dữ liệu theo ngày</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/report-month'">Dữ liệu theo tháng</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a [routerLink]="'/report-year'">Dữ liệu theo năm</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Quản Lý Bài Viết" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Quản Lý Hình Ảnh" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Thống Kê Dữ Liệu" nzIcon="form">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
+        </ul>
+      </li>
+      <li nz-submenu nzOpen nzTitle="Quản lý hệ thống" nzIcon="setting">
+        <ul>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <div class="app-header">
+        <div nz-row nzGutter="24">
+          <div nz-col [nzSpan]="20">
+            <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+              <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+            </span>
+          </div>
+          <div nz-col [nzSpan]="4">
+            <nz-dropdown>
+              <a nz-dropdown>
+                <span nz-icon nzType="user" nzTheme="outline"></span><span>{{userName}}</span>
+              </a>
+              <ul nz-menu>
+                <li nz-menu-item (click)="profile()">
+                  <span nz-icon nzType="user"></span>
+                  <span>Profile</span>
+                </li>
+                <li nz-menu-item (click)="settings()">
+                  <span nz-icon nzType="setting"></span>
+                  <span>Settings</span>
+                </li>
+                <li nz-menu-item (click)="logout()">
+                  <span nz-icon nzType="logout"></span>
+                  <span>Logout</span>
+                </li>
+              </ul>
+            </nz-dropdown>
+            <span nz-icon nzType="bell" nzTheme="outline" title="Đơn hàng chờ xử lí"></span> <span style="color: red;">12</span>
+          </div>
+          
+
         </div>
-      </nz-header>
-      <nz-content>
-        <div class="inner-content">
-          <nz-breadcrumb>
-            <!-- <nz-breadcrumb-item>Home</nz-breadcrumb-item>
+
+
+      </div>
+    </nz-header>
+    <nz-content>
+      <div class="inner-content">
+        <nz-breadcrumb>
+          <!-- <nz-breadcrumb-item>Home</nz-breadcrumb-item>
             <nz-breadcrumb-item>List</nz-breadcrumb-item>
             <nz-breadcrumb-item>App</nz-breadcrumb-item> -->
-          </nz-breadcrumb>
-          <router-outlet></router-outlet>
-        </div>
-      </nz-content>
-    </nz-layout>
+        </nz-breadcrumb>
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
   </nz-layout>
+</nz-layout>

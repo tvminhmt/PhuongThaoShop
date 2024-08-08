@@ -13,7 +13,6 @@ namespace PTS.Domain.Entities
         [MaxLength(50)]
         public string Code { get; set; }
         public Decimal Price { get; set; }
-        public Decimal OldPrice { get; set; }
 		public string? Upgrade { get; set; }
         public string? Description { get; set; }
         public int ProductEntityId { get; set; }

@@ -20,6 +20,6 @@ namespace PTS.Domain.Entities
         public DateTime? UpdDateTime { get; set; }
         public int Status { get; set; }
 		public virtual BillEntity? BillEntity { get; set; }
-        public virtual SerialEntity? SerialEntity { get; set; }
+        public ICollection<SerialEntity>? SerialEntities { get; set; }
     }
 }

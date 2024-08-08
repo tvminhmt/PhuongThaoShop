@@ -41,7 +41,6 @@ namespace PTS.Application.Features.ProductDetail.Queries
 							{
 								Id = a.Id,
 								Code = a.Code,
-								OldPrice = a.OldPrice,
 								Price = a.Price,
 								Status = a.Status,
 								Upgrade = a.Upgrade,

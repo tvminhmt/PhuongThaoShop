@@ -164,6 +164,7 @@ export class BillDetailComponent implements OnInit {
   saveAnotherForm() {
     if (this.serialForm.valid) {
       const obj = this.serialForm.value;
+      console.log(obj.serialNumber)
       console.log(this.billDetailId);
       this.adminService.updateSerial(obj.serialNumber,this.billDetailId).subscribe(
         (response: any) => {
